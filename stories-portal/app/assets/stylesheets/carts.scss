@@ -1,0 +1,36 @@
+// Place all the styles related to the Carts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.tbody{
+    white-space: normal;
+}
+.tbody .mdl-cell--alert{
+    text-align: center;
+}
+
+.message-empty-cart{
+    text-align: center;
+}
+
+.icon-empty-cart{
+    font-size: 55px;
+    font-weight: bolder;
+    color: white;
+    position: relative;
+    top: 25px;
+}
+
+.icon-message{
+    width: 80px;
+    height: 80px;
+    background-color: grey;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title-message{
+    color:  #3b3a30;
+}

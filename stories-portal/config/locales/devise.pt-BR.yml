@@ -1,0 +1,62 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+pt-BR:
+  devise:
+    confirmations:
+      confirmed: "O seu endereço de e-mail foi confirmado com sucesso."
+      send_instructions: "Você receberá um e-mail com instruções sobre como confirmar o seu endereço de e-mail em poucos minutos."
+      send_paranoid_instructions: "Se o seu endereço de e-mail existe conosco, você receberá um e-mail com instruções sobre como confirmar o seu endereço de e-mail em poucos minutos."
+    failure:
+      already_authenticated: "Você já está cadastrado."
+      inactive: "Sua conta Ainda não esta ativada."
+      invalid: "%{authentication_keys} ou senha Inválidos."
+      locked: "Sua conta está bloqueada."
+      last_attempt: "Você tem mais uma tentativa antes de sua conta ser bloqueada."
+      not_found_in_database: "%{authentication_keys} ou senha Inválidos."
+      timeout: "Sua sessão expirou. Por favor entre novamente para continuar."
+      unauthenticated: "Informe seus dados para entrar ou clique em cadastrar para continuar."
+      unconfirmed: "Você tem que confirmar o seu endereço de e-mail antes de continuar."
+    mailer:
+      confirmation_instructions:
+        subject: "Instruções de confirmação"
+      reset_password_instructions:
+        subject: "Instruções de como resetar sua senha"
+      unlock_instructions:
+        subject: "Instruções de desbloqueio"
+      password_change:
+        subject: "Senha alterada"
+    omniauth_callbacks:
+      failure: "Não foi possível autenticá-lo %{kind} porque \"%{reason}\"."
+      success: "Conta %{kind} autenticada com sucesso ."
+    passwords:
+      no_token: "Você não pode acessar essa página sem chegar a partir de um e-mail de redefinição de senha. Se você vem de um e-mail de redefinição de senha, por favor, certifique-se de que você usou o endereço (URL)  completo fornecido."
+      send_instructions: "Você receberá um e-mail com instruções sobre como redefinir sua senha em poucos minutos."
+      send_paranoid_instructions: "Se o seu endereço de e-mail existe conosco, você receberá um link de recuperação de senha no seu endereço de e-mail em poucos minutos."
+      updated: "sua senha foi alterada com sucesso. Agora você está conectado."
+      updated_not_active: "sua senha foi alterada com sucesso."
+    registrations:
+      destroyed: "Até mais! A sua conta foi cancelada com sucesso. Esperamos te ver novamente em breve."
+      signed_up: "Bem vinda(o)! Você se inscreveu com êxito."
+      signed_up_but_inactive: "Você se inscreveu com êxito. No entanto, não foi possível assinar você porque a sua conta ainda não está ativada."
+      signed_up_but_locked: "Você se inscreveu com êxito. No entanto, não foi possível assinar você porque sua conta está bloqueada."
+      signed_up_but_unconfirmed: "Uma mensagem com um link de confirmação foi enviado para seu endereço de e-mail. Por favor, acesse seu e-mail e siga o link para ativar sua conta."
+      update_needs_confirmation: "Você atualizou sua conta com êxito, mas precisamos confirmar seu novo endereço de e-mail. Por favor, verifique seu e-mail e siga o link de confirmação para confirmar o seu novo endereço de e-mail."
+      updated: "Sua conta foi atualizada com sucesso."
+    sessions:
+      signed_in: "Entrou com sucesso."
+      signed_out: "Saiu com sucesso."
+      already_signed_out: "Saiu com sucesso."
+    unlocks:
+      send_instructions: "Você receberá um e-mail com instruções sobre como desbloquear a sua conta em poucos minutos."
+      send_paranoid_instructions: "Se existe a sua conta, você receberá um e-mail com instruções sobre como desbloqueá-la em poucos minutos."
+      unlocked: "A sua conta foi desbloqueada com sucesso. Faça login para continuar."
+  errors:
+    messages:
+      already_confirmed: "já foi confirmada, por favor tente fazer login"
+      confirmation_period_expired: "deve ser confirmado dentro de %{period}, por favor, solicitar um novo"
+      expired: "expirou, por favor solicitar um novo"
+      not_found: "não encontrado"
+      not_locked: "não estava bloqueada"
+      not_saved:
+        one: "Existe 1 erro abaixo para ser corrigido:"
+        other: "Existem %{count} erros abaixo para serem corrigidos:"

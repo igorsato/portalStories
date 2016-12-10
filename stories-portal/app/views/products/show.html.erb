@@ -1,0 +1,223 @@
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: @product.name} %>
+
+
+   <div class=oxy-section>
+      <div class=oxy-section__content>
+         <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-top-40 oxy-margin-bottom-30">
+            <div class="mdl-cell--middle mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+               <ol class="oxy-breadcrumb">
+                  <li class="oxy-breadcrumb__item"><a href="<%=url_for(root_path)%>">Home</a></li>
+                  <li class="oxy-breadcrumb__item"><%=@product.slug%></li>
+                  
+               </ol>
+            </div>
+            <div class="mdl-cell--middle mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone mdl-typography--text-right">
+               <nav>
+                  <%if !@product.prev.blank?%>
+                  <a id="product-prev" href="<%=url_for(@product.prev)%>" rel="prev" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+                    <i class=material-icons>keyboard_arrow_left</i>
+                  </a>
+                  <div class=mdl-tooltip for="product-prev"><%=@product.prev.name%></div>
+                  <%else%>
+                    <a id="product-prev" rel="prev" class="mdl-button mdl-js-button mdl-button--icon mdl-button--disabled"> 
+                      <i class=material-icons>keyboard_arrow_left</i>
+                    </a>                 
+                  <%end%>
+                  <%if !@product.next.blank?%>
+                  <a id="product-next" href="<%=url_for(@product.next)%>" rel="next" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                  </a>
+                  <div class=mdl-tooltip for="product-next"><%=@product.next.name%></div>
+                  <%else%>
+                    <a id="product-next" rel="next" class="mdl-button mdl-js-button mdl-button--icon mdl-button--disabled">
+                      <i class=material-icons>keyboard_arrow_right</i>
+                    </a>
+                  <%end%>
+               </nav>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="oxy-section">
+      <div class="oxy-section__content">
+         <div class="mdl-grid mdl-grid--no-fullwidth">
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+               <div class="oxy-product-slider">
+                  <% if !@product.promotional_price.zero?%><div class="oxy-product-badge">Oferta</div><%end%>
+                  <div class="flexslider oxy-product-slider__slides" data-flex-animation=slide data-flex-controls=thumbnails data-flex-controlsalign=left data-flex-controlsposition=outside data-flex-directions=hide data-flex-directions-type=simple data-flex-duration=600 data-flex-slideshow=true data-flex-speed=7000 id=product-images>
+                     <ul class=slides>
+                      <%@product.pictures.each do |picture|%>
+                        <li data-thumb="<%=image_url(picture.media.url(:thumb))%>">
+                          <img alt="<%=@product.name%>" src="<%=image_url(picture.media.url(:large))%>">
+                        </li>
+                      <%end%>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-product-details">
+               <h1 class="mdl-typography--display-1 oxy-margin-top-0 oxy-margin-bottom-10"><%=truncate(@product.name, length: 50)%></h1>
+               <p class="mdl-typography--display-1 oxy-margin-0 oxy-margin-bottom-20 oxy-product-price">
+               <% if @product.promotional_price.zero?%>
+                <ins>
+                  <span><%=number_to_currency(@product.sale_price)%></span>
+                </ins>
+                <%else%>
+                <del>
+                  <span><%=number_to_currency(@product.sale_price)%></span>
+                </del>
+                <ins>
+                  <span><%=number_to_currency(@product.promotional_price)%></span>
+                </ins>
+                <%end%>
+              </p>
+              <p class="mdl-typography--title mdl-typography--font-light oxy-typography-line-height-normal oxy-opacity-50">SKU: <%=@product.sku%> </p>
+              <a href="#product-reviews-tab" id="review-rating-tooltip" class="oxy-rating oxy-rating--big oxy-margin-bottom-20 oxy-display-inline-block" title="Rated 4.00 out of 5">
+                <span style=width:85%>
+                  <strong class="oxy-rating__stars">4.00</strong> out of 5
+                </span>
+              </a>
+               <div class=mdl-tooltip for=review-rating-tooltip>
+                <span itemprop="reviewCount" class="count">1</span> avaliação</div>
+               <p class="mdl-typography--title mdl-typography--font-light oxy-typography-line-height-normal oxy-opacity-50"><%=@product.description_short%></p>
+               <%=form_for @order_item, class: 'oxy-margin-bottom-30' do |f|%>
+                  <div class="oxy-quantity">
+                     <input type="button" class="remove_product" value="-">
+                     <div class="mdl-textfield mdl-js-textfield">
+                        <%=f.number_field :quantity, value: 1, class: 'mdl-textfield__input', id: 'qtd_products', min: @product.qty_min_in_cart, max: @product.qty_max_in_cart, step: 1 %> 
+                        <label class="mdl-textfield__label" for="qtd_products"></label>
+                      </div>
+                     <input type="button" class="add_product" value="+">
+                  </div>
+                  <%= hidden_field_tag "hidden_shipping", nil, value: nil%>
+                  <%= f.hidden_field :product_id, value: @product.id %>
+                  <%=f.button "Comprar", class: 'mdl-button mdl-js-button mdl-button--raised mdl-button--colored btn-buy' %>
+               <%end%>
+               <div class=mdl-grid>              
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell mdl-cell--4-col-tablet mdl-cell mdl-cell--2-col-phone mdl-cell--middle">
+                     <div class="oxy-product-details__meta">
+                      <span>Categorias:<br> 
+                        <%@product.categories.each{|category|%>
+                          <a href="<%=url_for(shop_path(id: category.slug))%>" rel="tag">
+                            <%=category.name%>&nbsp;
+                          </a><%}%>
+                        </span> 
+                      </div>
+                  </div>
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell mdl-cell--4-col-tablet mdl-cell mdl-cell--2-col-phone mdl-cell--middle mdl-typography--text-right">
+                     <button id=product-share class="mdl-button mdl-js-button mdl-button--icon"><i class=material-icons>share</i></button>
+                     <ul class="mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect" for=product-share>
+                        <li class=mdl-menu__item>Compartilhar no Facebook</li>
+                        <li class=mdl-menu__item>Compartilhar no twitter</li>
+                        <li class=mdl-menu__item>Compartilhar no google+</li>
+                     </ul>
+                  </div>        
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell mdl-cell--4-col-tablet mdl-cell mdl-cell--2-col-phone "> 
+                    <div class="mdl-card">
+                      <div class="mdl-card__title mdl-card--expand">
+                        <strong>Calcular Frete</strong>
+                      </div>
+                      <div class="mdl-card__supporting-text ">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                          <%= label_tag "Digite seu CEP", nil, class: 'mdl-textfield__label' %>
+                          <%= text_field_tag :shipping, nil, maxlength:9, class: 'shipping mdl-textfield__input' %>
+                          <%= hidden_field_tag "product_id", nil, value: @product.id%>
+                        </div>
+                        <button type='button' class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ' id='btn-shipping' disabled>OK</button>
+                      </div>
+                      <div class="mdl-card__actions mdl-card--border" style="display:none">
+                        <table id="truckage" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                          <tbody class="tbody">
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>                    
+                 </div>                  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="oxy-section">
+      <div class="oxy-section__content">
+         <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-top-40">
+            <div class="mdl-cell mdl-cell--12-col">
+               <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                  <div class="mdl-tabs__tab-bar oxy-flex-justify-start">
+                    <a href="#product-description-tab" class="mdl-tabs__tab is-active">Descrição</a> 
+                  </div>
+                  <div class="mdl-tabs__panel oxy-padding-top-20 oxy-padding-bottom-20 is-active" id="product-description-tab">
+                     <%=@product.description.html_safe%>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="oxy-section">
+         <div class="oxy-section__content">
+            <div class="mdl-grid mdl-grid--no-fullwidth">
+               <div class="mdl-cell mdl-cell--12-col">
+                  <h2 class="mdl-typography--display-1 mdl-typography--text-center mdl-typography--font-light oxy-margin-top-40 oxy-margin-bottom-20">Produtos Relacionados</h2>
+                  <div class="oxy-divider oxy-divider--center">
+                     <div class="oxy-divider__border"></div>
+                  </div>
+               </div>
+            </div>
+            <div class="mdl-grid mdl-grid--no-fullwidth">
+            <% @product.categories.each do |category| %>  
+              <%category.products.where.not(id: @product.id).limit(4).each do |product|%>
+               <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone oxy-margin-bottom-40">               
+                  <div class="mdl-card mdl-shadow--2dp oxy-card-product">
+                     <div class="mdl-card__media oxy-card-product__media">
+                        <a href="<%=url_for(product_path(id: product.slug))%>">
+                          <% unless product.pictures.blank?%>
+                          <img alt="<%=product.name%>" class="oxy-card-product__image" src="<%=image_url(product.pictures.first.media.url(:small)) if !product.pictures.blank?%>"> 
+                          <img alt="<%=product.name%>" class="oxy-card-product__image" src="<%=image_url(product.pictures.first.media.url(:small)) if !product.pictures.blank?%>">                         
+                          <%end%>
+                        </a>
+                        <div class="mdl-card__title oxy-card-product__title">
+                           <h3 class="mdl-card__title-text oxy-card-product__title-text">
+                            <a href="<%=url_for(product_path(id: product.slug))%>" class=mdl-typography--font-light><%=product.name%></a></h3>
+                           <span class="mdl-typography--text-uppercase mdl-typography--font-bold oxy-card-product__tags">
+                            <%@product.categories.each do |categ|%>
+                              <a href="<%=url_for(shop_path(id: categ.slug))%>" rel="tag"><%=categ.name%></a>
+                            <%end%>
+                            
+                            </span>
+                           <div class="oxy-rating oxy-card-product__rating oxy-card-product__rating--animated" title="Rated 4.00 out of 5"><span style=width:80%><strong class="oxy-rating__stars">4.00</strong> out of 5</span></div>
+                        </div>
+                        <% if !product.promotional_price.zero?%><div class="oxy-card-product__badge oxy-product-badge">Oferta</div><%end%>
+                     </div>
+                     <div class="mdl-card__actions oxy-card-product-actions">
+                     <strong class="mdl-typography--headline oxy-product-price">
+                     <%if product.promotional_price.zero?%>
+                      <ins>
+                        <span><%=number_to_currency(product.sale_price)%></span>
+                      </ins>
+                      <%else%>
+                      <del>
+                        <span><%=number_to_currency(product.sale_price)%></span>
+                      </del>
+                      <ins>
+                        <span><%=number_to_currency(product.promotional_price)%></span>
+                      </ins>
+                      <%end%>
+                    </strong> 
+                    <%=form_for OrderItem.new, {remote: true, method: :post, authenticity_token: true} do |f|%>
+                        <%= f.hidden_field :quantity, value: 1%>
+                        <%= f.hidden_field :product_id, value: product.id %>
+                        <%=f.button class: 'oxy-button-add-product oxy-js-button-add-product mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-button--colored mdl-js-ripple-effect' do %>
+                        <i class='material-icons'>add_shopping_cart</i>
+                        <!--<button type="submit" class="oxy-button-add-product oxy-js-button-add-product mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" data-product="<%=product.id%>">
+                        </button>-->
+                        <%end%>
+                    <%end%>                    
+                    </div>
+                  </div>
+               </div>
+               <%end %>
+               <%end%>
+            </div>
+         </div>
+      </div>

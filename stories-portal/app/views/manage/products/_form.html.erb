@@ -1,0 +1,131 @@
+<div class="content">
+	<div class="col-lg-12 form-group">	<%=link_to "Voltar", manage_products_path, class: 'btn btn-primary' %>
+</div>
+	<div class="col-lg-12">
+		<%= form_for([:manage, @product], multipart: true) do |f|%>
+					<%= render partial: "layouts/partials/with_messages_of_errors", locals: {object: @product} %>
+					<div class="col-lg-4 col-xs-12 form-image">
+						<div class="col-lg-12 col-md-12">
+							<div class="<%= f.object.new_record? ? 'image':''%> empty form-group">
+								<%= !f.object.new_record? && f.object.pictures.present? ? image_tag(f.object.pictures[0].media.url(:small), class: 'product_added'): ''%>
+							</div>
+						</div>
+						<%= f.fields_for :pictures do |photo| %>					
+							<%f.object.pictures.each_with_index do |picture, index| %>
+								<% if index > 0 %>
+									<div class="col-lg-4 col-xs-4 form-group">
+										<div class="empty center-block">
+											<a href="javascript:void(0)">
+											<%= image_tag(picture.media.url(:thumb), class: 'pictures_media_remove', data: {'product': @product.id, 'media': picture.id})%>
+											</a>
+										</div>	
+									</div>
+								<%end%>
+							<%end%>	
+								<div class="col-lg-12 col-xs-12 well">
+									<% if f.object.new_record?%>
+										<%= photo.file_field :media, multiple: true%>
+									<%else%>
+										<%= photo.file_field :media, multiple: true, id: "pictures_media_add", data: {"product": f.object.id}%>
+								  <%end%>
+								</div>	
+
+						<% end %>						
+					</div>
+					<div class="col-lg-8 col-xs-12">
+						<div class="col-lg-10 form-group product well">
+							<div class="checkbox">
+									<%= f.label :featured do %>
+										<%=f.check_box :featured, {}, 1, 0 %>
+										Destaque
+									<% end %>
+							</div>
+							<div class="checkbox">
+									<%= f.label :active do %>
+										<%=f.check_box :active, {}, 1, 0 %>
+										Ativo
+									<% end %>
+							</div>
+						</div>					
+						<div class="col-lg-3 form-group">
+							<%= f.label :sku, "SKU do Produto" %>
+							<%= f.text_field :sku, class: "form-control", readonly: true %>
+						</div>
+						<div class="col-lg-9 form-group" style="margin-top: 25px;">
+							<%= button_tag "Gerar SKU", class: 'btn btn-primary', id: 'get-sku', type: 'button' %>
+						</div>
+						<div class="col-lg-10 form-group">
+							<%= f.label :name, "Nome do Produto" %>
+							<%= f.text_field :name, class: "form-control" %>
+						</div>
+						<div class="col-lg-10 form-group">
+							<%= f.label :description_short, "Descrição curta"%>
+							<%= f.text_field :description_short, class: "form-control" %>
+						</div>
+					</div>
+					<div class="col-lg-8 col-lg-offset-4 form-group">
+						<%= label_tag "Categorias"%>
+						<%= f.collection_select :category_ids, Category.all, :id, :name, {selected: f.object.category_ids}, {multiple: true, class: 'form-control selectpicker', id: 'categories_has_products'} %>
+					</div>					
+					<div class="form-group col-lg-12">
+						<%= f.label :description, "Descrição Longa"%>
+						<%= f.text_area :description, rows: '8', class: "form-control editor"%>
+					</div>
+					
+					<div class="form-group col-lg-3">
+						<%= f.label :qty_min_in_cart, "Quantidade Mínima no Carrinho" %>
+						<%= f.number_field :qty_min_in_cart, step: 1, class: "form-control" %>
+					</div>
+					
+					<div class="form-group col-lg-3">
+						<%= f.label :qty_max_in_cart, "Quantidade Máxima no Carrinho" %>
+						<%= f.number_field :qty_max_in_cart, step: 1, class: "form-control" %>
+					</div>
+						
+					<div class="form-group col-lg-3">
+						<%= f.label :balance, "Saldo" %>
+						<%= f.number_field :balance, min: 0, step: 1, class: "form-control" %>
+					</div>
+
+					<div class="form-group col-lg-3">
+						<%= f.label :cost_price, "Preço de Custo" %>
+						<%= f.number_field :cost_price, min: 0.00, step: :any, class: "form-control" %>
+					</div>
+					<div class="form-group col-lg-3">
+						<%= f.label :sale_price, "Preço de Venda"%>
+						<%= f.number_field :sale_price, min: 0.00, step: :any, class: "form-control" %>
+					</div>
+					<div class="form-group col-lg-3">
+						<%= f.label :promotional_price, "Preço Promocional" %>
+						<%= f.number_field :promotional_price, min: 0.00, step: :any, class: "form-control" %>
+					</div>
+
+					<div class="form-group col-lg-3">
+						<%= f.label :weight, "Peso"%>
+						<%= f.number_field :weight, min: 0.00, step: :any, class: "form-control" %>
+					</div>
+					<div class="form-group col-lg-3">
+						<%= f.label :height, "Altura" %>
+						<%= f.number_field :height, min: 0.00, step: :any, class: "form-control" %>
+					</div>
+					<div class="form-group col-lg-3">
+						<%= f.label :width, "Largura"%>
+						<%= f.number_field :width, min: 0.00, step: :any, class: "form-control" %>
+					</div>
+					<div class="form-group col-lg-3">
+						<%= f.label :depth, "Profundidade"%>
+						<%= f.number_field :depth, min: 0.00, step: :any, class: "form-control" %>
+					</div>
+
+
+				
+
+				<div class="form-group col-lg-12">
+					<%=f.submit "Salvar", class: 'btn btn-primary'%>
+				</div>
+
+
+
+		<%end%>
+		</div>
+</div>

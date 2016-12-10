@@ -1,0 +1,9 @@
+<% if page.current? %>
+  <li class="oxy-pagination__item">
+    <%= content_tag :a, page, class: "mdl-button oxy-pagination__link--current oxy-pagination__link mdl-js-button mdl-js-ripple-effect mdl-js-ripple-effect" %>
+  </li>
+<% else %>
+  <li class="oxy-pagination__item">
+    <%= link_to page, url, :rel => 'next', class: 'mdl-button oxy-pagination__link mdl-js-button mdl-js-ripple-effect mdl-js-ripple-effect', :remote => remote %>
+  </li>
+<% end %>

@@ -1,0 +1,36 @@
+<% # CADASTRO PARA RECEBER NOVIDADES%>
+
+<div class="oxy-section">
+   <div class="oxy-section__background oxy-section__background--bottom-align oxy-background-parallax">
+   <img src="<%=image_url('bg9-notinclude.jpg')%>" alt="section background"></div>
+   <div class="oxy-section__overlay"></div>
+   <div class="oxy-section__content">
+      <div class="mdl-grid mdl-grid--no-fullwidth">
+         <div class="mdl-cell mdl-cell--12-col oxy-animation" data-os-animation="fadeIn" data-os-animation-delay="0.1s">
+            <h2 class="oxy-color-light mdl-typography--display-1 mdl-typography--font-thin oxy-margin-top-80 oxy-margin-bottom-20">Nunca perca uma promoção</h2>
+         </div>
+      </div>
+      <div class="mdl-grid mdl-grid--no-fullwidth">
+        <%=notice%>
+      </div>
+      <%=form_for Newsletter.new do |f|%>
+      <form action=# class="oxy-margin-bottom-80 oxy-color-light">
+         <div class="mdl-grid mdl-grid--no-fullwidth">
+            <div class="mdl-cell mdl-cell--3-col">
+               <div class="mdl-textfield mdl-js-textfield textfield-demo mdl-textfield--floating-label">
+                 <%=f.label :name, class: 'mdl-textfield__label' %>
+                 <%=f.text_field :name, class: 'mdl-textfield__input'%>
+               </div>
+            </div>
+            <div class="mdl-cell mdl-cell--3-col">
+               <div class="mdl-textfield mdl-js-textfield textfield-demo mdl-textfield--floating-label">
+                 <%=f.label :email, class: 'mdl-textfield__label'%>
+                 <%=f.email_field :email, class: 'mdl-textfield__input' %>
+               </div>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--middle">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-js-ripple-effect mdl-button--accent oxy-margin-bottom-10">Cadastre-se</button></div>
+         </div>
+      <%end%>
+   </div>
+</div>

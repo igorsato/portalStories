@@ -1,0 +1,57 @@
+<% # PRODUTOS MAIS VENDIDOS %>
+<div class="oxy-section oxy-margin-bottom-40">
+   <div class="oxy-section__content">
+      <div class="mdl-grid mdl-grid--no-fullwidth">
+         <div class="mdl-cell mdl-cell--12-col oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.1s>
+            <h2 class="mdl-typography--display-1 mdl-typography--text-center mdl-typography--font-light oxy-margin-top-40 oxy-margin-bottom-20">Mais vendidos</h2>
+            <div class="oxy-divider oxy-divider--center oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.2s>
+               <div class="oxy-divider__border"></div>
+            </div>
+         </div>
+      </div>      
+
+      <div class="mdl-grid mdl-grid--no-fullwidth">
+      <%if !@top_selling_products.blank?%>
+
+      <% @top_selling_products.each do |sales|%> 
+
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.1s>
+            <div class="mdl-card mdl-shadow--2dp oxy-card-product">
+               <div class="mdl-card__media oxy-card-product__media">
+                  <a href="<%=url_for(product_path(id: sales.product.slug))%>">
+                                <img alt="some product" class="oxy-card-product__image" src="<%= sales.product.pictures.first.media.url(:small) if !sales.product.pictures.blank?%>"> 
+                                    <img alt="<%= sales.product.name%>" class="oxy-card-product__image" src="<%= sales.product.pictures.first.media.url(:small) if !sales.product.pictures.blank?%>">
+                            </a>
+                  <div class="mdl-card__title oxy-card-product__title">
+                     <h3 class="mdl-card__title-text oxy-card-product__title-text">
+                        <a href="<%=url_for(product_path(id: sales.product.slug))%>" class="mdl-typography--font-light"><%= sales.product.name%>
+                        </a>
+                    </h3>                  
+                  </div>
+               </div>
+               <% if sales.product.promotional_price.zero? %>
+                <div class="mdl-card__actions oxy-card-product-actions"><strong class="mdl-typography--headline oxy-product-price">
+                    <ins><span><%=number_to_currency(sales.product.sale_price)%></span></ins></strong>
+                  <% else %>
+                  <div class="mdl-card__actions oxy-card-product-actions"><strong class="mdl-typography--headline oxy-product-price">
+                    <div class="oxy-card-product__badge oxy-product-badge">Oferta</div>
+                    <del><span><%=number_to_currency(sales.product.sale_price)%></span></del>
+                    <ins><span><%=number_to_currency(sales.product.promotional_price)%></span></ins>
+                  <% end %>
+                    </strong>
+                    <%= form_for OrderItem.new, {remote: true, method: :post, authenticity_token: true} do |f|%>
+                            <%= f.hidden_field :quantity, value: 1%>
+                            <%= f.hidden_field :product_id, value: sales.product.id %>
+                            <%= f.button class: 'oxy-button-add-product oxy-js-button-add-product mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-button--colored mdl-js-ripple-effect' do %>
+                            <i class='material-icons'>add_shopping_cart</i>
+                            <%end%>
+                        <%end%>
+                </div>               
+              </div>
+          </div>
+
+          <%end%>
+         <%end%>
+      </div>
+   </div>
+</div>

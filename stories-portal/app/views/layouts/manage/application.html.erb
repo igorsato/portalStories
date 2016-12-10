@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%=APPLICATION_MANAGER_NAME%></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="<%=image_url("android-desktop.png")%>">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="silver">
+    <meta name="apple-mobile-web-app-title" content="BeSmart">
+    <link rel="apple-touch-icon-precomposed" href="<%=image_url("ios-desktop.png")%>">
+		<link rel="shortcut icon" href="<%=image_url("favicon.png")%>">
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'manage/application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body class="manager_<%=controller_name%> <%= action_name %>">
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">Você está com um navegador<strong> desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para ter uma experiência melhorada em nosso site.</p>
+    <![endif]-->
+    <%if notice %>
+     <div class="col-lg-12 notice alert <%= "alert-success" if notice %>"><%= notice %></div>
+     <%end%>
+     <% if alert%>
+     <div class="col-lg-3 col-lg-offset-4 alert <%= "alert-danger" if alert%>"><%= alert %></div>
+     <%end%>
+    <%= render 'layouts/manage/nav'%>
+    <%= yield :chart %>
+    <%= yield %>
+    <%=render "layouts/manage/footer"%>
+    <%= javascript_include_tag 'manage/application', 'data-turbolinks-track': 'reload' %>  
+    <script type="text/javascript"> Chartkick.configure({"language": "pt-BR"});</script>
+  </body>
+</html>

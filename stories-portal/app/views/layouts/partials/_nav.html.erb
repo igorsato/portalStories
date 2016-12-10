@@ -1,0 +1,47 @@
+<div class=mdl-layout__drawer>
+  <a class="mdl-layout-title" href="<%=url_for(root_path)%>">
+    <img src="<%=image_url('logo-dark.png')%>" alt="<%=APPLICATION_NAME%>">
+  </a>
+  <nav class=mdl-navigation>
+    <a class=mdl-navigation__link href="<%=url_for(root_path)%>">
+      <i class="material-icons mdl-navigation__icon">home</i> Página Inicial</a> 
+
+    <span class=mdl-navigation__link-divider></span> 
+    
+    <a class=mdl-navigation__link href="<%=url_for(shops_path)%>">
+      <i class="material-icons mdl-navigation__icon">shopping_basket</i> Produtos</a> 
+
+    <a class="mdl-navigation__link mdl-navigation__link--submenu" href=#>
+      <i class="material-icons mdl-navigation__icon">bookmark</i> Categorias</a>
+      <nav class="mdl-navigation mdl-navigation__submenu">
+        <%if !@categories.blank?%>
+        <%@categories.each do |category|%>
+         <a class="mdl-navigation__link mdl-navigation__submenu__link" href="/shops/<%=category.slug%>"><%=category.name%></a>
+        <%end%>
+        <%end%>
+      </nav>
+
+
+      <a class=mdl-navigation__link href="/cart">
+        <i class="material-icons mdl-navigation__icon">shopping_cart</i> Carrinho</a> 
+    <span class=mdl-navigation__link-divider></span> 
+    
+
+    <% if customer_signed_in?%>
+    <a class="mdl-navigation__link mdl-navigation__link--submenu" href="javascript:void(0)">
+      <i class="material-icons mdl-navigation__icon">account_box</i> Painel do Usuário</a>
+    <nav class="mdl-navigation mdl-navigation__submenu">
+      <a class="mdl-navigation__link mdl-navigation__submenu__link" href="<%=panel_my_personal_details_path%>">Alterar Dados</a>
+      <a class="mdl-navigation__link mdl-navigation__submenu__link" href="<%=panel_addresses_path%>">Meus Endereços</a> 
+      <a class="mdl-navigation__link mdl-navigation__submenu__link" href="<%=panel_my_orders_path%>">Meus Pedidos</a> 
+      <%= link_to destroy_customer_session_path, method: :delete, class:"mdl-navigation__link mdl-navigation__submenu__link" do %>
+      Sair
+      <%end%>
+     </nav>    
+    <%else%>        
+      <a class="mdl-navigation__link" href="<%=url_for(new_customer_session_path)%>">
+        <i class="material-icons mdl-navigation__icon">account_box</i> Entrar/Cadastrar-se</a>
+    <%end%>
+
+  </nav>
+</div>

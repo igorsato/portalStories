@@ -1,0 +1,39 @@
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Entrar/Cadastrar-se'} %>
+
+<div class="mdl-grid">
+  <div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp" id="card_login">
+    <div class="mdl-card__title">
+      <h1 class="mdl-card__title-text">Entrar</h1>
+    </div>
+    <div class="mdl-card__supporting-text">
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "oxy-margin-bottom-80 oxy-color-light") do |f| %>
+        <%= devise_error_messages! %>
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield textfield-demo mdl-textfield--floating-label">
+              <%= f.label "E-mail", class: 'mdl-textfield__label' %>
+              <%= f.email_field :email, autofocus: true, class: 'mdl-textfield__input' %>
+            </div>
+          </div>
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield textfield-demo mdl-textfield--floating-label">
+            <%= f.label "Senha", class: 'mdl-textfield__label' %>
+            <%= f.password_field :password, autocomplete: "off", class: 'mdl-textfield__input' %>
+            </div>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col mdl-cell--middle ">
+          <%= f.submit "Entrar", class: 'mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-js-ripple-effect mdl-button--accent oxy-margin-bottom-10' %>
+          </div>
+      <% end %>  
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-layout-spacer"></div>
+      <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+        <%= link_to "Esqueceu sua senha?", new_password_path(resource_name), class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+      <% end -%> 
+    </div>
+  </div>
+  <%= render 'devise/registrations/register'%>
+
+
+

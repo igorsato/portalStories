@@ -1,0 +1,140 @@
+
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Produtos'} %>
+
+<div class=oxy-section>
+    <div class=oxy-section__content>
+        <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-top-40 oxy-margin-bottom-30">
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                <ol class="oxy-breadcrumb">
+                    <li class="oxy-breadcrumb__item"><a href="<%=url_for(root_path)%>">home</a></li>
+                    <%if !@category.blank?%>
+                        <li class="oxy-breadcrumb__item"><%=@category.slug%></li>
+                    <%end%>
+                    
+                </ol>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-product-filters">
+                <%= page_entries_info @products %> 
+                <form role="search" style="display:inline;">
+                <%= form_tag(shops_path, method: :get, class: "oxy-display-inline") do%>
+                    <div class="mdl-selectfield mdl-js-selectfield oxy-product-filters__selectfield" tabindex="-1">
+                        <%=select_tag :orderby, options_for_select([['Preço menor para maior', 'asc'],['Preço maior para menor', 'desc']], params[:orderby]), class: 'mdl-selectfield__select', include_blank: 'Ordene por', onchange: 'return submit()' %>
+                    </div>
+                <%end%>
+                </form>
+            </div>
+        </div>
+        <div class="mdl-grid mdl-grid--no-fullwidth">
+            <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--2-order-tablet mdl-cell--2-order-phone">
+                 <div class="mdl-card mdl-shadow--2dp oxy-widget">
+                    <div class="mdl-card__title oxy-widget__title mdl-card--border">
+                        <h3 class=mdl-card__title-text>Categorias</h3>
+                    </div>
+                    <div class="mdl-card__supporting-text oxy-widget__content">
+                        <ul class=oxy-list>
+                        <% @categories.each do | category |%>
+                            <li class=oxy-list__item>
+                                <div class="oxy-list__item-text">
+                                    <a href="<%=url_for(shop_path(id: category.slug))%>" class="oxy-list__title">
+                                        <%= category.name %> (<%= category.products.count %>)
+                                    </a>
+                                </div>
+                            </li>
+                        <% end %>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp oxy-widget">
+                    <div class="mdl-card__title oxy-widget__title mdl-card--border">
+                        <h3 class=mdl-card__title-text>Filtrar por preço</h3>
+                    </div>
+                    <div class="mdl-card__supporting-text oxy-widget__content">
+                        <form role="search">
+                        <%=form_tag(shops_path, method: :get) do%>
+                        <input type="text" name="range_price" id="range_price" value="0">
+                        <div class="mdl-grid mdl-grid--no-spacing oxy-margin-top-20">
+                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-phone mdl-cell--middle">
+                            </div>
+                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-phone mdl-cell--middle mdl-typography--text-right">
+                                <%=button_tag "Pesquisar", class: 'mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored'%>
+                            </div>
+                        </div>
+                        <%end%>
+                        </form>
+                    </div>
+                </div>
+                <div class="mdl-card mdl-shadow--2dp oxy-widget">
+                    <div class="mdl-card__title oxy-widget__title mdl-card--border">
+                        <h3 class=mdl-card__title-text>Produtos Recentes</h3>
+                    </div>
+                    <div class="mdl-card__supporting-text oxy-widget__content">
+                        <ul class=oxy-list>
+
+                        <% @latest_news.each do | product |%>
+                            <li class=oxy-list__item>
+                                <a href="<%=url_for(product_path(id: product.slug))%>" class="oxy-list__icon">
+                                    <img src="<%=product.pictures.first.media.url(:thumb)%>" alt="product thumbnail">
+                                </a>
+                                <div class=oxy-list__item-text>
+                                    <a href="<%=url_for(product_path(id: product.slug))%>" class=oxy-list__title>
+                                        <%= product.name%>
+                                    </a> 
+                                    <span class="oxy-list__subtitle">
+                                        <%= number_to_currency(product.sale_price) %>
+                                    </span>
+                                </div>
+                            </li> 
+                        <% end %>                       
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mdl-grid mdl-cell mdl-cell--top mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                
+                <% @products.each do |product|%> 
+                
+                <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.1s>
+                    <div class="mdl-card mdl-shadow--2dp oxy-card-product">
+                        <div class="mdl-card__media oxy-card-product__media">
+                            <a href="<%=url_for(product_path(id: product.slug))%>">
+                                <img alt="some product" class="oxy-card-product__image" src="<%=product.pictures.first.media.url(:small) if !product.pictures.blank?%>"> 
+                                    <img alt="<%=product.name%>" class="oxy-card-product__image" src="<%=product.pictures.first.media.url(:small) if !product.pictures.blank?%>">
+                            </a>
+                            <div class="mdl-card__title oxy-card-product__title">
+                                <h3 class="mdl-card__title-text oxy-card-product__title-text">
+                                    <a href="<%=url_for(product_path(id: product.slug))%>" class="mdl-typography--font-light"><%= product.name%>
+                                    </a>
+                                </h3>
+                                <span class="mdl-typography--text-uppercase mdl-typography--font-bold oxy-card-product__tags"></span>
+                            </div>
+                        </div>
+                        <% if product.promotional_price.zero? %>
+                            <div class="mdl-card__actions oxy-card-product-actions"><strong class="mdl-typography--headline oxy-product-price">
+                            <ins><span><%= number_to_currency(product.sale_price) %></span></ins>                            
+                        <% else %>
+                            <div class="oxy-card-product__badge oxy-product-badge">Oferta</div>
+                            <div class="mdl-card__actions oxy-card-product-actions"><strong class="mdl-typography--headline oxy-product-price">
+                                <del><span><%= number_to_currency(product.sale_price) %></span></del>
+                                <ins><span><%= number_to_currency(product.promotional_price) %></span></ins>
+                        <% end %>
+                        </strong> 
+                        <%=form_for OrderItem.new, {remote: true, method: :post, authenticity_token: true} do |f|%>
+                            <%= f.hidden_field :quantity, value: 1%>
+                            <%= f.hidden_field :product_id, value: product.id %>
+                            <%=f.button class: 'oxy-button-add-product oxy-js-button-add-product mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-button--colored mdl-js-ripple-effect' do %>
+                            <i class='material-icons'>add_shopping_cart</i>
+                            <!--<button type="submit" class="oxy-button-add-product oxy-js-button-add-product mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" data-product="<%=product.id%>">
+                            </button>-->
+                            <%end%>
+                        <%end%>
+                        </div>
+                    </div>
+                </div>
+
+                <% end %>
+               
+                <%= paginate @products%>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>StoriesPortal</title>
+      <meta charset=utf-8>
+      <meta http-equiv=X-UA-Compatible content="IE=edge">
+      <meta name=description content>
+      <meta name=viewport content="width=device-width, initial-scale=1">
+      <title>Feira dos Cosméticos</title>
+      <!-- Favicons-->
+      <link rel="icon" href="<%=image_url('favicon.ico')%>" sizes="32x32">      
+      <link rel=apple-touch-icon href="<%=image_url('apple-touch-icon.png')%>">
+      <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,300italic,400italic,500,500italic,700,900" rel=stylesheet type=text/css>
+      <link rel=stylesheet href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
 
-  <body>
-    <%= yield %>
+  </head>
+  <body class="front_<%=controller_name%> <%= action_name %>">
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--overlay-drawer-button mdl-layout--fixed-header">
+      <%= render "layouts/partials/header" %>
+      <main class=mdl-layout__content> 
+        <%= yield %>
+        <%= render "layouts/partials/footer" %>
+      </main>
+    </div>
+    <%= render "/layouts/partials/cart_floating" unless ['carts'].include?(controller_name)%>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %> 
   </body>
 </html>

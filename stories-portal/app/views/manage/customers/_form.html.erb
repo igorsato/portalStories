@@ -1,0 +1,42 @@
+	<div class="col-lg-12">
+		<%= form_for([:manage, @customer]) do |f|%>
+					<%= render partial: "layouts/partials/with_messages_of_errors", locals: {object: @customer} %>
+				<div class="col-lg-10 form-group">
+				<div class="col-lg-6 form-group">	
+					<%= f.label :name %>
+					<%= f.text_field :name, placeholder: true, class: "form-control" %>
+				</div>
+				<div class="col-lg-6 form-group">					
+					<%= f.label :lastname %>
+					<%= f.text_field :lastname, placeholder: true, class: "form-control" %>
+				</div>
+				<div class="col-lg-4 form-group">	
+					<%= f.label :username %>
+					<%= f.text_field :username, placeholder: true, class: "form-control" %>
+				</div>
+				<div class="col-lg-4 form-group">	
+					<%= f.label :email %>
+					<%= f.text_field :email, placeholder: true, class: "form-control" %>
+				</div>
+				<div class="col-lg-3 form-group">						
+					<%= f.label :cpf %>
+					<%= f.text_field :cpf, placeholder: true, class: "form-control isCPF" %>
+				</div>
+				<div class="col-lg-3 form-group">	
+					<%= f.label :password %>
+					<%= f.password_field :password, placeholder: true, class: "form-control"%>
+				</div>
+				<div class="col-lg-3 form-group">						
+					<%= f.label :password %>
+					<%= f.password_field :password_confirmation, placeholder: true, class: "form-control"%>
+				</div>
+				<div class="col-lg-3 form-group">
+					<%=f.label :access_id, "Tipo de Acesso"%>
+					<%=f.collection_select :access_id, Access.where(active: true), :id, :name, {prompt: "Selecione um tipo de Acesso"}, html_options = {class: 'form-control' }%>
+				</div>
+				<div class="form-group col-lg-12">
+					<%=link_to "Voltar", manage_customers_path, class: 'btn btn-default' %>					
+					<%=f.submit "Salvar", class: 'btn btn-primary'%>
+				</div>
+		<%end%>
+		</div>

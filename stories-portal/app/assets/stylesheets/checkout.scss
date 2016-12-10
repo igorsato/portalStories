@@ -1,0 +1,78 @@
+// Place all the styles related to the checkout controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.order_summary {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#personal_details_checkout_label {
+    color: #e91e63;
+}
+
+#personal_details_content {
+    color: black;
+    font-size: 14px;
+}
+
+#checkout_content_personal_details {
+    border-radius: 2px;
+    background-color: #f0f0f0;
+}
+
+#checkout_content_addresses {
+    border-radius: 2px;
+    background-color: #f0f0f0;
+}
+
+#finalize_buy_button {
+    background-color: #89B946;
+    color: white;
+    font-size: 1.3em;
+    width: 250px;
+    height: 50px;
+    vertical-align: middle;
+}
+
+.card_checkout_address {
+    color: black;
+    font-size: 14px;
+}
+
+.radio_symbol {
+    top: 5px;
+}
+
+#label-radio-address {
+    top: -6px;
+    position: relative;
+}
+
+#devider-checkout-address {
+    top: -10px;
+    position: relative;
+}
+
+.address-form-checkout {
+    color: inherit;
+    font-size: 16px;
+    width: 150, 39px;
+    left: -3px;
+}
+
+.select_field_checkout {
+    color: inherit;
+    font-size: 16px;
+}
+
+.select_field_checkout-mes {
+    left: 13px;
+}
+
+.select_field_checkout-ano {
+    left: 35px;
+}
+
+#label-validate-card {
+    width: 150px;
+}

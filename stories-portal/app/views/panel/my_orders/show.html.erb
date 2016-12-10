@@ -1,0 +1,90 @@
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Painel do Cliente'} %>
+
+<div class=oxy-section>
+   <div class=oxy-section__content>
+
+      <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-top-10 oxy-margin-bottom-10"></div>
+      <div class="mdl-grid mdl-grid--no-fullwidth">
+         <div class="mdl-cell mdl-cell--2-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--2-order-tablet mdl-cell--2-order-phone">
+            <div class="mdl-card mdl-shadow--2dp oxy-widget">
+               <div class="mdl-card__title oxy-widget__title mdl-card--border">
+                  <h3 class=mdl-card__title-text>Minha Conta</h3>
+               </div>
+               <div class="mdl-card__supporting-text oxy-widget__content">
+                  <ul class=oxy-list>
+                     <li class=oxy-list__item>
+                        <div class=oxy-list__item-text>
+                           <a href=shop.html class=oxy-list__title>Meus Pedidos</a>
+                        </div>
+                     </li>
+                     <span class=mdl-navigation__link-divider></span> 
+                     <li class=oxy-list__item>
+                        <div class=oxy-list__item-text>
+                           <a href=shop.html class=oxy-list__title>Dados Pessoais</a>
+                        </div>
+                     </li>
+                     <li class=oxy-list__item>
+                        <div class=oxy-list__item-text>
+                           <a href=shop.html class=oxy-list__title>Alterar Senha</a>
+                        </div>
+                     </li>
+                     <li class=oxy-list__item>
+                        <div class=oxy-list__item-text>
+                           <a href=shop.html class=oxy-list__title>Endereços</a>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div class="mdl-grid mdl-cell mdl-cell--top mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-margin-top-10"> 
+            <div class="mdl-cell mdl-cell--top mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-margin-top-10">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp oxy-full-width oxy-data-table oxy-data-table--center oxy-data-table--middle">
+                  <thead>
+                     <tr>
+                        <th>Status do Pedido</th>
+                        <th>Subtotal</th>
+                        <th>Frete</th>
+                        <th>Total</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td><%= order.order_status.name%></td>
+                        <td><%= order.subtotal%></td>
+                        <td><%= order.shipping%></td>
+                        <td><%= order.total%></td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="mdl-grid mdl-cell mdl-cell--top mdl-cell--7-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-margin-top-10">
+               <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp oxy-full-width oxy-data-table oxy-data-table--center oxy-data-table--middle">
+                  <thead>
+                     <tr>
+                        <th></th>
+                        <th>Produto</th>
+                        <th>Preço Unitário</th>
+                        <th>Quantidade</th>
+                        <th>Frete</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <% order.order_items.each do |order_item|%>
+                     <tr>
+                        <td><a href=#><img width=60 height=60 src="<%=image_url('logo.png')%>" alt=image></a></td>
+                        <td><a href=#><%= order_item.product.name %></a></td>
+                        <td><%= order_item.product.sale_price %></td>
+                        <td><%= order_item.quantity %></td>
+                        <td><%= order.shipping %></td>
+                     </tr>
+                     <%end%>
+                  </tbody>
+               </table>
+            </div>
+            <%= paginate @orders%>
+         </div>
+      </div>
+
+   </div>
+</div>

@@ -1,0 +1,56 @@
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Painel do Cliente'} %>
+
+<div class=oxy-section>
+   <div class=oxy-section__content>
+      <div class="mdl-grid mdl-grid--no-fullwidth">
+         <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--2-order-tablet mdl-cell--2-order-phone">
+            <div class="mdl-card mdl-shadow--2dp oxy-widget">
+               <div class="mdl-card__title oxy-widget__title mdl-card--border">
+                  <i class="material-icons">&#xE8CC;</i>
+                  <h3 class=mdl-card__title-text>Meus Pedidos</h3>
+               </div>
+               <div class="mdl-card__supporting-text oxy-widget__content">
+                  <%=render 'panel/partials/links'%>
+               </div>
+            </div>
+         </div>
+         <div class="mdl-grid mdl-cell mdl-cell--top mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-margin-top-10">
+
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp oxy-full-width oxy-data-table oxy-data-table--center oxy-data-table--middle">
+            <%if !@orders.blank?%>
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Tipo de Frete</th>                     
+                        <th>Preço do Frete</th>
+                        <th>Subtotal dos Itens</th>
+                        <th>Quantidade de Itens</th>   
+                        <th>Total Itens + Frete</th>
+                    </tr>
+                </thead>
+                <tbody>                    
+                    <% @orders.each do |order| %>
+                    
+                        <tr>
+                            <td><a href=#><%= order.order_status.name %></a></td>
+                            <td><%=order.shipping_name%></td>
+                            <td><%=number_to_currency( order.shipping ) %></td>
+                            <td><%=number_to_currency( order.subtotal ) %></td>
+                            <td><%= order.order_items.sum(:quantity) %></td>
+                            <td><strong><%=number_to_currency( order.total ) %></strong></td>
+                        </tr> 
+                    <% end %>
+                </tbody>
+            <%else%>
+                <tbody>
+                    <tr>
+                        <td>Não há itens comprados.</td>
+                    </tr>
+                </tbody>
+            <%end%>
+            </table>
+            <%= paginate @orders%>
+         </div>
+      </div>
+   </div>
+</div>

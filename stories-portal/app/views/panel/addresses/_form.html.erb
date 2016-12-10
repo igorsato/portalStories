@@ -1,0 +1,57 @@
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell-4-col-phone">
+        <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+            <%=f.label :postal_code, class: 'mdl-textfield__label' %>
+            <%=f.text_field :postal_code, class: 'mdl-textfield__input shipping add_address' %>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--9-col mdl-cell--2-col-tablet mdl-cell-4-col-phone">
+        <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+            <%=f.label :alias, class: 'mdl-textfield__label'%>
+            <%=f.text_field :alias, class: 'mdl-textfield__input' %>
+        </div>
+    </div>    
+    <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell-4-col-phone">
+        <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+            <%=f.label :street, class: 'mdl-textfield__label'%>
+            <%=f.text_field :street, class: 'mdl-textfield__input street_address' %>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell-4-col-phone">
+        <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+            <%=f.label :number, class: 'mdl-textfield__label' %>
+            <%=f.text_field :number, class: 'mdl-textfield__input' %>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+        <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+            <%=f.label :complement, class: 'mdl-textfield__label'%>
+            <%=f.text_field :complement, class: 'mdl-textfield__input'%>
+        </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--3-col-tablet mdl-cell-4-col-phone">
+        <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+            <%=f.label :neighborhood, class: 'mdl-textfield__label' %>
+            <%=f.text_field :neighborhood, class: 'mdl-textfield__input neighborhood_address' %>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--3-col-tablet mdl-cell-4-col-phone">
+        <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+            <%=f.label :city, class: 'mdl-textfield__label'%>
+            <%=f.text_field :city, class: 'mdl-textfield__input city_address'%>
+        </div>
+    </div>
+    <div class="mdl-grid" id="align-center">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone" id="align-center">
+            <%=f.collection_select :state_id, State.all, :id, :full_name, {prompt: 'Selecione um Estado'}, class: 'state_address'%>
+
+        </div>
+    </div>
+    <% if controller_name != "checkout"%>
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell-12-col-phone">
+      <%=f.label :main_address, class: 'mdl-radio mdl-js-radio mdl-js-ripple-effect' do %>
+          <%=f.check_box :main_address, class: 'mdl-radio__button'%>
+          <span class="mdl-radio__label"><%= f.label :main_address %></span>
+      <%end%>
+    </div>
+    <%end%>

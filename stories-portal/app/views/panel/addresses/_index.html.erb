@@ -1,0 +1,23 @@
+<% @addresses.each do |address| %>
+    <tr class="<%=(address.main_address ? 'mdl-cell--success' : '')%>">
+        <td>
+          <%if !address.main_address%>
+            <%= link_to xhr_update_panel_addresses_path(main_address: !address.main_address, id: address.id), {remote: true} do%>
+              <i class="material-icons">&#xE888;</i>
+            <%end%>
+          <%else%>
+              <i class="material-icons">&#xE876;</i>
+          <%end%>
+        </td>
+        <td><%= address.alias %></td>
+        <td><%= address.street %></td>
+        <td><%= address.number %></td>
+        <td><%= address.neighborhood %></td>
+        <td><%= address.city %></td>
+        <td>
+            <%=link_to panel_address_path(id: address.id), method: :delete, class: 'mdl-button mdl-js-button mdl-button--accent mdl-button--icon' do %>
+              <i class="material-icons">delete_sweep</i>
+            <%end%>
+        </td>
+    </tr>                    
+<% end %>

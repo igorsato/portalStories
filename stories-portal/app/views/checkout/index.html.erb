@@ -1,0 +1,351 @@
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Resumo do Pedido'} %>
+
+<div class=oxy-section>
+   <div class=oxy-section__content>
+      <%= form_for @customer, as: :customer , url: checkout_customer_path, method: :patch  do |f| %>
+        <%=hidden_field_tag :shipping_value%>
+        <%=hidden_field_tag :shipping_name%>
+         <div class="mdl-grid mdl-grid--no-fullwidth">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone order_summary">                     
+                  <div class="mdl-card mdl-card mdl-shadow--2dp oxy-card-order">
+
+                        <div class=mdl-card__title>
+                              <h2 class=mdl-card__title-text>Seu pedido</h2>
+                        </div>
+                        <div class="oxy-card-order__summary oxy-data-table">
+                              <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp oxy-full-width oxy-data-table oxy-data-table--center oxy-data-table--middle oxy-card-order__summary-table">
+                                    <thead>
+                                          <tr>
+                                                <th style="width:10%;"></th>
+                                                <th style="width:50%;">Produto</th>
+                                                <th>Valor Unitário</th>
+                                                <th>Quantidade de itens</th>
+                                                <th style="width:15%">Subtotal do Item</th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% current_order.order_items.each do |item| %>
+                                          <tr>
+                                                <td><%=image_tag(image_url(item.product.pictures.first.media.url(:thumb)), width: 60, height: 60)%></td>
+                                                <td><%= item.product.name %> </td>
+                                                <td><%= number_to_currency item.unit_price%></td>
+                                                <td><%= item.quantity %></td>
+                                                <td><%= number_to_currency item.total_price %></td>
+                                          </tr>
+                                    <% end %>
+                                    </tbody>
+                                    <tfoot>
+                                          <tr>
+                                                <th colspan="4" class="align-right mdl-data-table__cell--non-numeric ">Subtotal</th>
+                                                <td class="border-gray"><%=number_to_currency current_order.sub_total%></td>
+                                          </tr>
+                                          <tr>
+                                                <th colspan="4" class="align-right mdl-data-table__cell--non-numeric ">Frete <%="#{session[:trunkage]} dias" unless session[:trunkage].blank?%></th>
+                                                <td class="border-gray frete"><%=number_to_currency current_order.shipping%></td>
+                                          </tr>
+                                          <tr>
+                                                <th colspan="4" class="align-right mdl-data-table__cell--non-numeric ">Total</th>
+                                                <td class="border-gray total_cart"><%=number_to_currency current_order.final_total%></td>
+                                          </tr>
+                                    </tfoot>
+                              </table>
+                        </div>
+                  </div>              
+            </div>
+
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">                
+              <div class="mdl-shadow--2dp oxy-card-order" id="error-explanation">
+                <% if !flash[:error].blank?%>
+                <ul class="mdl-cell--alert">
+                  <li><%=flash[:error] %></li>
+                </ul> 
+                <%end%>
+              </div>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">                
+                  <div class="mdl-shadow--2dp oxy-card-order oxy-margin-bottom-40">
+                        <div class=mdl-card__title>
+                              <h2 class=mdl-card__title-text>Dados Pessoais</h2>
+                        </div>
+                        
+                        <div class=mdl-card__supporting-text>
+                        <div class="mdl-grid oxy-margin-top--10">
+                              
+                              <% if !@customer.name.blank? && !@customer.lastname.blank? && !@customer.cpf.blank?%>
+                              <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone mdl-shadow--2dp" id="checkout_content_personal_details">  
+                                    <div class=mdl-card__supporting-text>                                  
+                                          <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield oxy-margin-bottom--30" id="personal_details_checkout_label">Nome: <span id="personal_details_content"><%= @customer.name %>&nbsp;<%= @customer.lastname %></span></div>
+                                          <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield oxy-margin-bottom--30" id="personal_details_checkout_label">E-mail: <span id="personal_details_content"><%= @customer.email %></span></div>
+                                          <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield" id="personal_details_checkout_label">CPF: <span id="personal_details_content"><%= @customer.cpf %></span></div>
+                                    </div>
+                              </div> 
+                              <% else %>
+                              <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+                                    <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                          <%= f.label :email, class:'mdl-textfield__label' %>
+                                          <%= f.text_field :email, readonly: true, class:'mdl-textfield__input' %>
+                                    </div>
+                              </div> 
+
+                              <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+                                    <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                          <%= f.label :name, class:'mdl-textfield__label' %>
+                                          <%= f.text_field :name, class:'mdl-textfield__input' %>
+                                    </div>
+                              </div>     
+
+                              <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+                                    <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                          <%= f.label :lastname, class:'mdl-textfield__label' %>
+                                          <%= f.text_field :lastname, class:'mdl-textfield__input' %>
+                                    </div>
+                              </div>                          
+
+                              <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+                                    <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                          <%= f.label :cpf, class:'mdl-textfield__label' %>
+                                          <%= f.text_field :cpf, class:'mdl-textfield__input maskcpf' %>
+                                          <span class="mdl-textfield__error">Digite apenas números</span>
+                                    </div>
+                              </div>
+                              <% end %>
+                              </div>
+
+                        <%if @customer.addresses.count > 0%>
+                              <div class="mdl-card__title oxy-margin-top-10 oxy-margin-bottom--10">
+                                    <h2 class=mdl-card__title-text>Endereço(s)</h2>
+                              </div>
+                              <div class="mdl-card__supporting-text">
+                                    
+                                    <% @customer.addresses.each_with_index do |a,i|%>
+                                          <% if !a.new_record?%>
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone mdl-shadow--2dp" id ="checkout_content_addresses">
+                                                      <div class="mdl-cell radio_symbol oxy-full-width">
+                                                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="<%= a.id%>">                                                            
+                                                              <%=radio_button_tag 'address_id[]', a.id, false, class: 'mdl-radio__button address_id',id: "#{a.id}", data: {'zipcode': a.postal_code}%>                                                  
+                                                            <span class="mdl-radio__label label-radio-address"><strong><%= a.alias %><%=(a.main_address ? ' <em style="font-size: .8em;">(principal)</em>'.html_safe : '')%></strong></span>
+
+                                                       </label> 
+                                                       </div>
+                                                       
+                                                       <div class="mdl-grid">
+                                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell-4-col-phone card_checkout_address"> 
+                                                                  <div class="oxy-layout__divider  oxy-margin-bottom--20" id="devider-checkout-address"></div>                                                                 
+                                                                  <span class="mdl-radio__label"><br><%= a.street %>,</span>
+                                                                  <span class="mdl-radio__label "><%= a.number %>&nbsp;</span>
+                                                                  <span class="mdl-radio__label"><br><%= a.complement %>&nbsp;-</span>
+                                                                  <span class="mdl-radio__label"><%= a.neighborhood %>&nbsp;</span>
+                                                                  <span class="mdl-radio__label"><br><%= a.city %>&nbsp;-</span>
+                                                                  <span class="mdl-radio__label"><%= a.state.unit %>&nbsp;-</span>
+                                                                  <span class="mdl-radio__label">CEP&nbsp;<%= a.postal_code %></span>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                          <%end%>
+                                    <% end %>
+                                    <!--<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone mdl-shadow--2dp" id ="checkout_content_addresses">                                          
+                                      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="new_address">
+                                        <div class="mdl-cell">
+                                          <input type="radio" id="new_address" class="mdl-radio__button" name="options_addresses" value="new_address"> 
+                                          <span class="mdl-radio__label">Novo Endereço</span>
+                                        </div> 
+                                      </label>
+                                    </div>                                    -->
+                              </div>
+                        <% end %>
+                        </div>
+                  </div>              
+            </div>
+
+            
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone order_summary">                
+                  <div class="mdl-card mdl-card mdl-shadow--2dp oxy-card-order">
+                        <div class='mdl-card__title shipping-cart'>
+                              <h2 class='mdl-card__title-text'>Entrega</h2>
+                        </div>
+                        
+                        <div class='mdl-card__supporting-text delivery_method'>
+                             <% if @customer.addresses.count < 1%>
+                              <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+                                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
+                                    <%=text_field_tag "customer[addresses_attributes][0][postal_code]", nil, class: 'mdl-textfield__input shipping checkout-cart get_cep get_truckage'%>
+                                      <label class=mdl-textfield__label for="coupon">CEP</label>
+                                  </div>
+                              </div>
+                             <%else%>
+                              <%=hidden_field_tag "customer[addresses_attributes][0][postal_code]", nil, class: 'mdl-textfield__input shipping checkout-cart get_cep get_truckage'%>                             
+                             <%end%> 
+                          <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+                            <table id="cart-truckage" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                              <tbody class="tbody">
+                              </tbody>
+                            </table>
+                          </div>
+                        </div> 
+                          <div style="<%= @customer.addresses.count > 0 ? 'display:none' : ''%>">
+                            <%=f.fields_for :addresses do |address| %>
+                                  <% if address.object.id.nil? && @customer.addresses.count < 1%>
+                                    <div class="mdl-card__title oxy-margin-top-20">
+                                          <h2 class=mdl-card__title-text>Endereço</h2>
+                                    </div>
+                                    <div class=mdl-card__supporting-text>
+                                          <div class="mdl-grid oxy-margin-top--10">
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--2-col-tablet mdl-cell-4-col-phone">
+                                                      <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                                            <%=address.label :alias, class: 'mdl-textfield__label'%>
+                                                            <%=address.text_field :alias, class: 'mdl-textfield__input alias_address' %>
+                                                      </div>
+                                                </div> 
+                                                <div class="mdl-cell mdl-cell--9-col mdl-cell--6-col-tablet mdl-cell-4-col-phone">
+                                                      <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                                            <%=address.label :street, class: 'mdl-textfield__label'%>
+                                                            <%=address.text_field :street, class: 'mdl-textfield__input street_address' %>
+                                                      </div>
+                                                </div>
+                                                <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell-4-col-phone">
+                                                      <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                                            <%=address.label :number, class: 'mdl-textfield__label' %>
+                                                            <%=address.number_field :number, class: 'mdl-textfield__input number_address' %>
+                                                      </div>
+                                                </div>
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+                                                      <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                                            <%=address.label :complement, class: 'mdl-textfield__label'%>
+                                                            <%=address.text_field :complement, class: 'mdl-textfield__input '%>
+                                                      </div>
+                                                </div>
+
+                                                <div class="mdl-cell mdl-cell--6-col mdl-cell--3-col-tablet mdl-cell-4-col-phone">
+                                                      <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                                            <%=address.label :neighborhood, class: 'mdl-textfield__label' %>
+                                                            <%=address.text_field :neighborhood, class: 'mdl-textfield__input neighborhood_address' %>
+                                                      </div>
+                                                </div>
+                                                <div class="mdl-cell mdl-cell--6-col mdl-cell--3-col-tablet mdl-cell-4-col-phone">
+                                                      <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                                            <%=address.label :city, class: 'mdl-textfield__label'%>
+                                                            <%=address.text_field :city, class: 'mdl-textfield__input city_address'%>
+                                                      </div>
+                                                </div>
+                                                <div class="mdl-cell mdl-cell--6-col mdl-cell--3-col-tablet mdl-cell-4-col-phone address-form-checkout">
+                                                      <%=address.collection_select :state_id, State.all, :id, :full_name, {prompt: 'Estado'}, class: 'state_address mdl-cell--12-col'%>
+                                                </div>
+                                                <% if controller_name != "checkout"%>
+                                                  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell-12-col-phone">
+                                                        <%=address.label :main_address, class: 'mdl-radio mdl-js-radio mdl-js-ripple-effect' do %>
+                                                        <%=address.check_box :main_address, class: 'mdl-radio__button'%>
+                                                        <span class="mdl-radio__label"><%= address.label :main_address %></span>
+                                                        <%end%>
+                                                  </div>
+                                                <%end%>
+                                          </div>
+                                    </div>
+                                  <%end%>
+                              <%end%> 
+                          </div>
+                  </div>              
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone order_summary">                
+                  <div class="mdl-card mdl-card mdl-shadow--2dp oxy-card-order oxy-margin-bottom-40">
+                        <div class='mdl-card__title'>
+                              <h2 class=mdl-card__title-text>Pagamento</h2>
+                        </div>
+                        
+                        <div class='mdl-card__supporting-text'>
+                              <p>
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for='pagSeguro'>
+                                          <input type=radio id='pagSeguro' class='mdl-radio__button' name='options_shipping' value='PagSeguro'> 
+                                          <span class=mdl-radio__label>PagSeguro</span>
+                                    </label>
+                              </p>
+                              <p>
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for='creditCard'>
+                                          <input type='radio' id='creditCard' class=mdl-radio__button name='options_shipping' value='Cartão de Crédito'> 
+                                          <span class='mdl-radio__label'>Cartão de Crédito</span>
+                                    </label>
+                              </p>
+                        </div>
+                        <div class='mdl-card__supporting-text payment_method' style='display:none'>
+                              <div class="mdl-grid oxy-margin-top--20">                                    
+                                    <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+                                          <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                          <label class='mdl-textfield__label' for='numberCard'>Número do Cartão</label> 
+                                          <input class='mdl-textfield__input' maxlength="14" type="number" id='numberCard'></div>
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+                                          <div class="mdl-textfield mdl-textfield--full-width mdl-textfield--floating-label mdl-js-textfield">
+                                          <label class='mdl-textfield__label' for='nameCard'>Nome como está no Cartão</label> 
+                                          <input class='mdl-textfield__input' type=text id='nameCard'></div>
+                                    </div>
+                                    <div class="mdl-grid">
+                                          <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">
+                                                <div class="mdl-textfield  mdl-textfield--floating-label mdl-js-textfield">
+                                                      <label class='mdl-textfield__label' for='secureCode'>Código de Segurança</label> 
+                                                      <input class='mdl-textfield__input' maxlength="4" type="number" id='secureCode'>
+                                                </div>
+                                          </div>
+                                          <div class="mdl-grid select_field_checkout" id="align-center">
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone">                                                
+                                                      <select id="myFlag" name="myFlag" class="select_field" id="align-center">
+                                                            <option value="0">Bandeira</option>
+                                                            <option value="1">VISA</option>
+                                                            <option value="2">MASTERCARD</option>
+                                                            <option value="3">ELO</option>
+                                                      </select>                                                
+                                                </div> 
+                                          </div>                                         
+                                    </div>
+                                    
+                                    <div class="mdl-grid select_field_checkout c">
+                                          <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell-4-col-phone" id="label-validate-card">
+                                                <label class='mdl-textfield__label' for='reference'>Validade do Cartão</label>
+                                          </div>
+                                          <div class="mdl-grid select_field_checkout">
+                                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell-4-col-phone select_field_checkout-mes" id="align-center">                                                      
+                                                      <select id="monthValidate" name="monthValidate" class="select_field">
+                                                            <option value="0">Mês</option>
+                                                            <option value="1">01</option>
+                                                            <option value="2">02</option>
+                                                            <option value="3">03</option>
+                                                            <option value="4">04</option>
+                                                            <option value="5">05</option>
+                                                            <option value="6">06</option>
+                                                            <option value="7">07</option>
+                                                            <option value="8">08</option>
+                                                            <option value="9">09</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                      </select>                                                      
+                                                </div>
+                                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell-4-col-phone select_field_checkout-ano" id="align-center">                                                
+                                                      <select id="yearValidate" name="yearValidate" class="select_field">
+                                                            <option value="0">Ano</option>
+                                                            <option value="16">16</option>
+                                                            <option value="17">17</option>
+                                                            <option value="18">18</option>
+                                                            <option value="19">19</option>
+                                                            <option value="20">20</option>
+                                                            <option value="21">21</option>
+                                                            <option value="22">22</option>
+                                                            <option value="23">23</option>
+                                                            <option value="24">24</option>
+                                                            <option value="25">25</option>
+                                                            <option value="26">26</option>
+                                                      </select>                                                
+                                                </div>
+                                          </div>
+                                    </div>                               
+                              </div>
+                        </div>                        
+                  </div>
+                  <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone centralize_button">
+                        <div class="mdl-card__actions  mdl-typography--text-center">
+                                <%= f.submit 'Finalizar Compra', class:"mdl-button mdl-js-button mdl-button--raised", id:"finalize_buy_button"%>
+                        </div>
+                  </div>
+            </div>            
+      </div>
+      <%end%>
+   </div>
+</div>

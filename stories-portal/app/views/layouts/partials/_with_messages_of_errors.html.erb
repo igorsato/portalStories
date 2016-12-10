@@ -1,0 +1,24 @@
+<% if object.errors.full_messages.any? %>
+  <div class="col-lg-12">
+  <div id="panel-user-error" class="alert alert-danger ">
+
+
+      <div class="panel-body">
+        <div id="error_explanation" class="collapsed">
+          <div class="col-lg-12">
+          <%=(object.errors.count > 1 ? "Existem": "Existe")%> <strong><%= pluralize(object.errors.count, (object.errors.count > 1 ? "erros" : "erro")) %></strong>  abaixo para <%=(object.errors.count > 1 ? "serem corrigidos": "corrigir")%>:
+            <span>  
+              <ul class="errors-list-type">
+                <% object.errors.full_messages.each do |error_message| %>
+                <li>
+                  <%= error_message.html_safe %> 
+                </li>
+                <% end %>
+              </ul>
+            </span>
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+<% end %> 

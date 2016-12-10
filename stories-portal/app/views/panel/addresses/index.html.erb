@@ -1,0 +1,88 @@
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Painel do Cliente'} %>
+
+<div class=oxy-section>
+   <div class=oxy-section__content>
+   
+      <div class="mdl-grid mdl-grid--no-fullwidth">
+         <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--2-order-tablet mdl-cell--2-order-phone">
+            <div class="mdl-card mdl-shadow--2dp oxy-widget">
+               <div class="mdl-card__title oxy-widget__title mdl-card--border">
+                  <i class="material-icons">&#xE88A;</i>
+                  <h3 class=mdl-card__title-text>Meus Endereços</h3>
+               </div>
+               <div class="mdl-card__supporting-text oxy-widget__content">
+                  <%=render 'panel/partials/links'%>
+               </div>
+            </div>
+         </div>         
+         
+         <div class="mdl-grid mdl-cell mdl-cell--top mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-margin-top-10">
+
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp oxy-full-width oxy-data-table oxy-data-table--center oxy-data-table--middle">
+                <%if !@addresses.blank?%>
+                <thead>
+                    <tr>
+                      <th>Endereço Principal</th>
+                      <th>Apelido</th>
+                      <th>Logradouro</th>
+                      <th>Número</th>
+                      <th>Bairro</th>
+                      <th>Cidade</th>
+                      <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="table_addresses">
+                <% @addresses.each do |address| %>
+                    <tr class="<%=(address.main_address ? 'mdl-cell--success' : '')%>">
+                        <td>
+                          <%if !address.main_address%>
+                            <%= link_to xhr_update_panel_addresses_path(main_address: !address.main_address, id: address.id), {remote: true} do%>
+                            <i class="material-icons">&#xE888;</i>
+                            <%end%>
+                          <%else%>
+                              <i class="material-icons">&#xE876;</i>
+                          <%end%>
+                        </td>
+                        <td><%= address.alias %></td>
+                        <td><%= address.street %></td>
+                        <td><%= address.number %></td>
+                        <td><%= address.neighborhood %></td>
+                        <td><%= address.city %></td>
+                        <td>
+                          <%=form_tag "/panel/addresses/#{address.id}",  method: :delete do %>
+                            <%= button_tag "Delete", class: 'mdl-button mdl-js-button mdl-button--accent mdl-button--icon', data: {disable_with: '<i class="material-icons">delete_sweep</i>'.html_safe} do%>
+                              <i class="material-icons">delete_sweep</i>
+                            <%end%> 
+                          <%end%>
+                        </td>
+                    </tr>                    
+                <% end %>
+                </tbody>
+            <%else%>
+                <tbody>
+                    <tr>
+                        <td>Não há endereços cadastrados</td>
+                    </tr>
+                </tbody>
+            <%end%>
+            </table>
+            <%= paginate @addresses %>           
+    <%=form_for([:panel, @address]) do |f|%>
+        <%=f.hidden_field :customer_id, value: current_customer.id%>
+                      
+            <div class="mdl-grid mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-margin-bottom-40 mdl-shadow--2dp oxy-full-width oxy-margin-top-10">
+                <%= render partial: "layouts/partials/with_messages_of_errors", locals: {object: @address} %>
+                <div class="mdl-grid oxy-margin-bottom-10">    
+                    <%=render partial: 'panel/addresses/form', locals: {f: f}%>
+                    
+                    <div class="mdl-grid mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell-4-col-phone centralize_button">
+                        <%= f.submit 'Adicionar Endereço', class:"mdl-button mdl-js-button mdl-button--raised mdl-button--colored centralize_button" %>
+                    </div>
+                </div>
+            </div>
+        <%end%>
+
+         </div>
+      </div>
+   </div>
+</div>

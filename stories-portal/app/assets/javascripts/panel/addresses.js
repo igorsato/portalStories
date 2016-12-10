@@ -1,0 +1,1 @@
+$(".front_addresses.index").ready(function() {});

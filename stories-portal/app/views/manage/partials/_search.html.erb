@@ -1,0 +1,8 @@
+<form role="search" class="navbar-form navbar-right">
+    <%= form_tag object do%>
+        <div class="form-group">
+            <%= text_field_tag :search, (!params[:search].blank? ? params[:search]:''), class: "form-control"%>
+            <%= button_to "buscar", nil, class: "btn btn-default"%>					
+        </div>
+    <%end%>
+</form>

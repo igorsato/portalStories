@@ -1,0 +1,126 @@
+
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Carrinho'} %>
+
+<div class="oxy-section">
+   <div class=oxy-section__content>
+      <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-top-40">
+        <div class="mdl-cell mdl-cell--12-col"><label class="mdl-textfield__label"></label></div>
+         <div class="mdl-cell mdl-cell--12-col">
+        <%if !@order_items.size.zero?%>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp oxy-full-width oxy-data-table oxy-data-table--center oxy-data-table--middle">
+               <thead>
+                  <tr>
+                     <th style="width:5%"></th>
+                     <th style="width:10%;"></th>
+                     <th style="width:50%;">Produto</th>
+                     <th>Preço Unitário</th>
+                     <th>Quantidade</th>
+                     <th>Atualizar</th>
+                     <th style="width:15%">Subtotal do Item</th>
+                  </tr>
+               </thead>
+               <tbody>
+                <% @order_items.each do | item| %>
+                  <%=form_for(item) do |f|%>
+                    <tr>
+                      <td>
+                        <%= link_to order_item_path(id: item.id), data: { confirm: "Você tem certeza que deseja remover o produto '#{item.product.name}' da sua compra?" }, method: :delete, class: 'mdl-button mdl-js-button mdl-button--accent mdl-button--icon' do%>
+                          <i class="material-icons">delete_sweep</i>
+                        <%end%>
+                      <td><a href="<%=product_path(item.product.slug)%>"><img width=60 height=60 src="<%=image_url(item.product.pictures.first.media.url(:thumb))%>" alt=''></a></td>
+                      <td style="text-align:left;"><a href="<%=product_path(item.product.slug)%>"><%=item.product.name%></a></td>
+                      <td><%=number_to_currency item.unit_price%></td>
+                      <td>
+                          <div class="oxy-quantity">
+                            <input type="button" class="remove_product" name="del_<%=item.id%>" value="-">
+                            <div class="mdl-textfield mdl-js-textfield">
+                            <%=f.number_field :quantity, min: item.product.qty_min_in_cart, max: item.product.qty_max_in_cart, step: 1, value: item.quantity, title: 'Quantidade de Produtos', class: 'mdl-textfield__input', id: "qtd_products_#{item.id}" %>
+                            <label class="mdl-textfield__label" for="qtd_products<%=item.id%>"></label></div>
+                            <input type="button" class="add_product" name="add_<%=item.id%>" value="+">
+                          </div>
+                      </td>
+                      <td>
+                      <div class="oxy-quantity">
+                          <%=f.button do %>
+                            <i class="material-icons">refresh</i>
+                          <%end%>
+                        </div>
+                      </td>
+                      <td><strong><%=number_to_currency item.total_price%></strong></td>
+                    </tr>
+                  <%end%>
+                <%end%>
+                    <tr>
+                      <th colspan="6" class="mdl-data-table__cell--non-numeric align-right"><strong>Subtotal</strong></th>
+                      <td class=" border-gray"><%=number_to_currency current_order.sub_total%></td>
+                    </tr>
+                    <tr>
+                      <th colspan="6" class="mdl-data-table__cell--non-numeric align-right"><strong>Frete <%="#{session[:trunkage]} dias" unless session[:trunkage].blank?%></strong></th>
+                      <td class=" border-gray frete"><%=number_to_currency current_order.shipping%></td>
+                    </tr>
+                    <tr>
+                      <th colspan="6" class="mdl-data-table__cell--non-numeric align-right"><strong>Total</strong></th>
+                      <td class=" border-gray total_cart"><%=number_to_currency current_order.final_total%></td>
+                    </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-bottom-20">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--8-col-tablet mdl-cell--8-col-phone mdl-cell--middle">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent oxy-full-width shipping-cart">Calcular Frete</button>
+          </div>
+          <div class="mdl-cell mdl-cell--1-col mdl-cell--8-col-tablet mdl-cell--8-col-phone mdl-cell--middle">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
+              <input class='mdl-textfield__input shipping get_truckage' type='text' name="zipcode" id="zipcode" value="<%=params[:shipping_cart] unless params[:shipping_cart].blank?%>"> 
+              <label class=mdl-textfield__label for="coupon">CEP</label>
+            </div>
+          </div>
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+          <div class="mdl-card__actions">
+            <table id="cart-truckage" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+              <tbody class="tbody">                  
+              </tbody>
+            </table>
+          </div>
+         </div>          
+         <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+         <a href="<%=shops_path%>" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent oxy-full-width">Continuar Comprando</a></div>
+         <!--div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+         <%=link_to cart_path, class:"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent oxy-full-width" do %>Atualizar Carrinho<%end%></div-->
+         <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+          <%=link_to "Concluir Compra", checkout_path, class: 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary oxy-full-width' %>
+         </div>
+      </div>
+      <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-bottom-40">
+         <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--8-col-phone mdl-cell--middle"></div>
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--8-col-phone mdl-cell--middle">
+
+      <%else%>
+      <div class="oxy-section oxy-margin-top--50 ">
+        <div class="oxy-section__content">
+          <div class="mdl-grid message-empty-cart">
+              <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">                
+                  <div class="icon-message">
+                    <h1><span class="icon-empty-cart">:(&nbsp;</span></h1>
+                  </div>
+              </div>
+              <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                <h1>
+                  <span class="mdl-typography--font-thin title-message"><strong>Ops! Seu carrinho está vazio.</strong></span>
+                </h1>
+                <p class="">Para inserir produtos no seu carrinho, navegue pelo shopping ou utilize a busca do site. </br>Ao encontrar os produtos desejados, clique no botão "Comprar".</p>
+              </div>
+              <div class="mdl-grid"  id="align-center">
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                  <%=link_to shops_path, class:"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent oxy-margin-bottom-40" do %>Continuar comprando<%end%>
+                </div>
+              <div>
+          </div>
+        </div>
+      </div>
+      <%end%>
+         </div>
+      </div>
+   </div>
+</div>

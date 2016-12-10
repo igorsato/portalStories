@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+		<h4>Itens do Pedido</h4>
+    <%=link_to "Voltar", manage_orders_path, class: 'btn btn-default' %>
+  </div>
+  <div class="panel-body">
+  	<div class="col-lg-12 table-responsive">
+	  	<% if !@order.blank?%>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th style="width:3%;"></th>
+							<th style="width:72%;">Produto</th>
+							<th style="width:10%">Preço Unitário</th>
+							<th style="width:5%">Quantidade</th>              
+							<th style="width:10%;">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+            <%if !@order.order_items.blank?%>
+							<%@order.order_items.each do |order_item|%>
+                <tr>
+                  <td></td>
+                  <td><%=order_item.product.name if !order_item.product.blank?%></td>
+                  <td><%=number_to_currency order_item.unit_price%></td>
+                  <td><%=order_item.quantity%></td>
+                  <td><%=number_to_currency order_item.total_price%></td>
+                  <td></td>
+                </tr>
+                <%end%>
+            <%end%>
+					</tbody>
+		  	</table>
+	  	<%else%>
+					<span class="default-color align-center">Não há itens neste pedido.</span>
+			<%end%>
+		</div>
+	</div>
+</div>

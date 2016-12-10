@@ -1,0 +1,38 @@
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Mudar sua Senha'} %>
+
+<div class="mdl-grid">
+    <div id="card_login">
+    </div> 
+  <div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp" id="card_register">
+    <div class="mdl-card__supporting-text" id="card_text_register">
+    
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+    <%= devise_error_messages! %>
+          <%= f.hidden_field :reset_password_token %>
+            <div class="mdl-cell mdl-cell--12-col">
+              <div class="mdl-textfield mdl-js-textfield textfield-demo mdl-textfield--floating-label">
+              <%= f.label :password, "Nova Senha", class: 'mdl-textfield__label' %><br />
+              <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'mdl-textfield__input' %>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield textfield-demo mdl-textfield--floating-label">    
+                <%= f.label :password_confirmation, "Confirmar nova senha", class: 'mdl-textfield__label' %><br />
+                <%= f.password_field :password_confirmation, autocomplete: "off", class: 'mdl-textfield__input' %>
+              </div>        
+              <div class="mdl-textfield mdl-js-textfield textfield-demo mdl-textfield--floating-label">
+                <% if @minimum_password_length %>
+                  <em>(Use no mínimo <%= @minimum_password_length %> caracteres)</em><br />
+                <% end %>
+              </div>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--middle">
+              <%= f.submit "Mudar minha senha", class: 'mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-js-ripple-effect mdl-button--accent oxy-margin-bottom-10' %>
+            </div>
+    <% end %>
+    <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-layout-spacer"></div>
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+
+</div>
+</div>

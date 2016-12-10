@@ -1,0 +1,59 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+		<h4>Pedidos</h4>
+  </div>
+
+  <div class="panel-body">
+  	<div class="col-lg-12 table-responsive">
+	  	<% if !@orders.blank?%>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th style="width:3%;"></th>
+							<th style="width:7%;">Pagamento</th>
+							<th style="width:20%">Cliente Nome</th>
+							<th style="width:20%">Cliente Email</th>              
+							<th style="width:10%;">Status</th>
+              <th style="width:10%;">Sub-Total</th>
+							<th style="width:10%;">Frete</th>
+							<th style="width:10%;">Total</th>
+              <th style="width:10%;">Tipo de Frete</th>
+							<th style="width:5%;">Número Pedido</th>
+              <th>Data do Pedido</th>
+							<th style="width:5%;">Ação</th>
+						</tr>
+					</thead>
+					<tbody>
+							<%@orders.each do |order|%>
+                <%if !order.blank?%>
+                <tr>
+                  <td></td>
+                  <td><%=order.payment.name if !order.payment.blank?%></td>
+                  <td><%= "#{order.customer.name} #{order.customer.lastname}" if !order.customer.blank? && (!order.customer.name.blank? || !order.customer.lastname.blank?) %></td>
+                  <td><%=order.customer.email if !order.customer.blank? && !order.customer.email.blank?%></td>
+                  <td><%=order.order_status.name if !order.order_status.blank?%></td>
+                  <td><%=number_to_currency order.sub_total if !order.sub_total.blank?%></td>
+                  <td><%=number_to_currency order.shipping if !order.shipping.blank?%></td>
+                  <td><%=number_to_currency order.total if !order.total.blank?%></td>
+                  <td><%=order.shipping_name%></td>
+                  <td>#<%=order.order_number if !order.order_number.blank?%></td>
+                  <td><%=order.created_at.strftime('%d/%m/%Y')%></td>
+                  <td>
+                    <%= link_to manage_order_path(order.id), class: '' do %>
+                      <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                    <%end%>
+                  </td>
+                </tr>
+                <%end%>
+							<%end%>
+					</tbody>
+		  	</table>
+				<div class="col-lg-12 text-center">
+					<%= paginate @orders, views_prefix: 'manage/' %>
+				</div>        
+	  	<%else%>
+					<span class="default-color align-center">Não há pedidos efetuados.</span>
+			<%end%>
+		</div>
+	</div>
+</div>

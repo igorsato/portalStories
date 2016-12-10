@@ -1,0 +1,3 @@
+module Manage::ProductsHelper
+
+end

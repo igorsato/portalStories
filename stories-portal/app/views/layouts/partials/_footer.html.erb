@@ -1,0 +1,46 @@
+<footer class="mdl-mega-footer oxy-color-primary">
+   <div class=mdl-mega-footer--middle-section>
+      <div class=mdl-mega-footer--drop-down-section>
+         <input class=mdl-mega-footer--heading-checkbox type=checkbox checked>
+         <h1 class=mdl-mega-footer--heading>Sobre a Feira dos Cosméticos</h1>
+         <div class=mdl-mega-footer__widget>
+            <p>A Feira dos cosméticos é um site de venda de produtos de beleza voltado para o público feminino. Aqui você encontra produtos com qualidade garantida e pelos melhores preços</p>
+            <p>Atuando no mercado deste Dezembro de 2016 buscamos sempre prover a melhor experiência aos nossos clientes.</p>
+         </div>
+         <div class=mdl-mega-footer__widget><i class="fa fa-cc-mastercard"></i> &nbsp; <i class="fa fa-cc-visa"></i> &nbsp; <i class="fa fa-cc-amex"></i> &nbsp; <i class="fa fa-cc-diners-club"></i> &nbsp; <i class="fa fa-cc-paypal"></i> &nbsp; <i class="fa fa-cc-jcb"></i></div>
+      </div>
+      
+      <div class=mdl-mega-footer--drop-down-section>
+         <input class=mdl-mega-footer--heading-checkbox type=checkbox checked>
+         <h1 class=mdl-mega-footer--heading>Lançamentos</h1>
+         <div class=mdl-mega-footer__widget>
+             <% @lauch_products_footer = Product.where(created_at: (Time.now - 7.day)..Time.now).limit(9) %>
+             <% @lauch_products_footer.each do |product|%> 
+             <a href=<%=url_for(product_path(id: product.slug))%>><img width="60" height="60" class="oxy-margin-bottom-10 oxy-margin-right-10" src="<%=product.pictures.first.media.url(:small) if !product.pictures.blank?%>" alt="<%=product.name%>"></a> 
+             <% end %>
+        </div>
+      </div>
+      <div class=mdl-mega-footer--drop-down-section>
+         <input class=mdl-mega-footer--heading-checkbox type=checkbox checked>
+         <h1 class=mdl-mega-footer--heading>Destaques</h1>
+         <div class=mdl-mega-footer__widget>
+            <% @featured_products_footer = Product.where(active: true, featured: true).limit(9)%>
+            <% @featured_products_footer.each do |product|%> 
+             <a href=<%=url_for(product_path(id: product.slug))%>><img width="60" height="60" class="oxy-margin-bottom-10 oxy-margin-right-10" src="<%=product.pictures.first.media.url(:small) if !product.pictures.blank?%>" alt="<%=product.name%>"></a> 
+             <% end %>         
+         </div>
+      </div>
+      <div class=mdl-mega-footer--drop-down-section>
+         <input class=mdl-mega-footer--heading-checkbox type=checkbox checked>
+         <h1 class=mdl-mega-footer--heading>Nossa Sede</h1>
+         <div class=mdl-mega-footer__widget>
+            <p>Contate-nos. Adoraríamos ouvir o que tem a dizer</p>
+            <p>Avenida Eusébio Estevaux<br>S/N, Santo Amaro<br>Centro Universitaŕio SENAC<br>(11) 3344-5566<br></p>
+            <p><a href=#>feiradoscosmeticos.com.br</a><br>info@fdc.com.br</p>
+            <p><a href=# class="mdl-button mdl-js-button mdl-button--icon"><i class="fa fa-facebook"></i></a> <a href=# class="mdl-button mdl-js-button mdl-button--icon"><i class="fa fa-twitter"></i></a> <a href=# class="mdl-button mdl-js-button mdl-button--icon"><i class="fa fa-flickr"></i></a> <a href=# class="mdl-button mdl-js-button mdl-button--icon"><i class="fa fa-linkedin"></i></a></p>
+         </div>
+      </div>
+   </div>
+</footer>
+
+

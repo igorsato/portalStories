@@ -1,0 +1,33 @@
+<header class="mdl-layout__header mdl-layout__header--waterfall oxy-layout__header oxy-layout__header--transparent">
+   <div class=mdl-layout__header-row>
+      <a class=mdl-layout-title href="<%=url_for(root_path)%>"><img src="<%=image_url('logo.png')%>" alt=BeSmart></a>
+      <div class=mdl-layout-spacer></div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+         <label class="mdl-button mdl-js-button mdl-button--icon" for="search"><i class=material-icons>search</i></label>
+         <div class=mdl-textfield__expandable-holder>
+         <%=form_tag shops_path, method: :get do %>
+          <%#<input class=mdl-textfield__input type=text name=sample id=waterfall-exp>%>
+          <%=text_field_tag :search, nil, class: 'mdl-textfield__input' %>
+         <%end%>
+         </div>
+      </div>
+   </div>
+   <div class="mdl-layout__header-row oxy-margin-top--10">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link  mdl-nav-link mdl-typography--text-center " href="<%=url_for(shops_path)%>">
+          <i class="material-icons header-icon">&#xE8C9;</i><i class="header-icon-text">&nbsp;Categorias</i></a>
+        <a class="mdl-navigation__link mdl-nav-link mdl-typography--text-center " href="<%=url_for(products_path)%>">
+          <i class="material-icons header-icon">&#xE8EF;</i><i class="header-icon-text">&nbsp;Produtos</i></a>
+        <%if customer_signed_in?%>
+          <a class="mdl-navigation__link mdl-nav-link mdl-typography--text-center " href="<%=panel_root_path%>">
+            <i class="material-icons header-icon">&#xE871;</i><i class="header-icon-text">&nbsp;Meu Painel</i></a>
+        <%else%>
+          <a class="mdl-navigation__link mdl-nav-link mdl-typography--text-center " href="<%=url_for(new_customer_session_path)%>">
+            <i class="material-icons header-icon">&#xE871;</i><i class="header-icon-text">&nbsp;Entrar/Cadastrar-se</i></a>
+        <%end%>
+      </nav>
+   </div>
+</header>
+
+<%= render 'layouts/partials/nav' %>

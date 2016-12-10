@@ -1,0 +1,88 @@
+
+<% # CAROUSEL DA HOME %>
+<%=render "layouts/partials/carousel"%>
+
+<% # BANNER SUPERIOR DA HOME %>
+<div class=oxy-section>
+   <div class=oxy-section__content>
+      <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-top-10">
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.1s><a href="<%=url_for(shops_path)%>"><img src="<%=image_url('banner_loreal.jpg')%>" class=oxy-image-responsive alt="Banner 1"></a></div>
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.2s><a href="<%=url_for(shops_path)%>"><img src="<%=image_url('banner_olay.jpg')%>" class=oxy-image-responsive alt="Banner 2"></a></div>
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone oxy-animation mdl-cell--hide-tablet" data-os-animation=fadeIn data-os-animation-delay=0.3s><a href="<%=url_for(shops_path)%>"><img src="<%=image_url('banner_dior.jpg')%>" class=oxy-image-responsive alt="Banner 3"></a></div>
+      </div>
+   </div>
+</div>
+
+<% # LANÇAMENTOS DA HOME %>
+<%=render "layouts/partials/launch_products"%>
+
+
+<% # BANNER CENTRAL DA HOME %>
+<div class="oxy-section">
+   <div class="oxy-section__content">
+      <div class="mdl-grid mdl-grid--no-spacing">
+         <div class="mdl-grid mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+            <div class="oxy-background-parallax"><img src="<%=image_url('bg33-notinclude.jpg')%>" alt="section background"></div>
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone"></div>
+            <div class="mdl-cell mdl-cell--5-col mdl-cell--middle oxy-color-light mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+               <h2 class="oxy-bigtext oxy-margin-top-100"><span class="mdl-typography--text-uppercase mdl-typography--font-thin oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.1s>Ofertas de Inverno</span> <span class="mdl-typography--text-uppercase mdl-typography--font-medium oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.2s>Compre 2 e leve 1 grátis</span></h2>
+               <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised oxy-margin-bottom-100 oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.1s href="<%=url_for(shops_path)%>">VER TODOS OS PRODUTOS</a>
+            </div>
+            <div class="mdl-cell mdl-cell--1-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"></div>
+         </div>
+         <div class="mdl-grid mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+            <div class="oxy-background-parallax"><img src="<%=image_url('bg31-notinclude.jpg')%>" alt="section background"></div>
+            <div class="mdl-cell mdl-cell--5-col mdl-cell--4-col-tablet mdl-cell--4-col-phone"></div>
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--middle oxy-color-light mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+               <h3 class="oxy-margin-top-150 mdl-typography--text-uppercase mdl-typography--font-thin oxy-color-light oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.1s>Novidades</h3>
+               <p class="oxy-margin-bottom-150 oxy-color-light oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.2s>Conheça a nova linha Pantene com tratamento completo para o seus cabelos. 
+                   A nova linha trará mais brilho e movimento para você arrasar neste verão.</p>
+            </div>
+            <div class="mdl-cell mdl-cell--1-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"></div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<% # PRODUTOS MAIS VENDIDOS %>
+<%=render "layouts/partials/top_selling_products"%>
+
+<% # CADASTRO PARA RECEBER NOVIDADES%>
+<%=render "layouts/partials/register_for_newsletter" %>
+
+
+<% # PRODUTO PATROCINADO EM DESTAQUE %>
+<%=render "layouts/partials/featured_products" %>
+
+
+<% # INFORMAÇÕES DE ENTREGA, SEGURANÇA E DEVOLUÇÃO%>
+<div class="oxy-section oxy-color-primary oxy-margin-top-40">
+   <div class="oxy-section__content">
+      <div class="mdl-grid mdl-grid--no-fullwidth oxy-margin-top-40 oxy-margin-bottom-40">
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.1s>
+            <i class="material-icons mdl-36 oxy-opacity-70">flight</i>
+            <h4 class="mdl-typography--title mdl-typography--font-regular">Entrega rápida</h4>
+            <p class=mdl-typography--font-light>Na Feira dos Cosméticos o seu produto é tratado como joia, e sim, ele tem asas. Nós garantimos a entrega do seu produto com toda a qualidade e carinho e rapidez sem esperar muito tempo para ter o seu produto. Vamos lá! Garanta já o seu.</p>
+         </div>
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.2s>
+            <i class="material-icons mdl-36 oxy-opacity-70">shopping_cart</i>
+            <h4 class="mdl-typography--title mdl-typography--font-regular">Compra segura</h4>
+            <p class=mdl-typography--font-light>A Feira dos Cosméticos tem o compromisso com a privacidade e a segurança de seus clientes durante todo o processo de navegação e compra pelo site. Os dados cadastrais dos clientes não são vendidos, trocados ou divulgados para terceiros.</p>
+         </div>
+         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-typography--text-center oxy-animation" data-os-animation=fadeIn data-os-animation-delay=0.3s>
+            <i class="material-icons mdl-36 oxy-opacity-70">loyalty</i>
+            <h4 class="mdl-typography--title mdl-typography--font-regular">Devolução sem custo adicional</h4>
+            <p class=mdl-typography--font-light>Com a Feira dos Cosméticos é satisfação garantida. Se você não ficar satisfeito nós trocamos seu produto para compras feitas no prazo de até 7 (sete) dias, a contar da data de entrega. Pode ficar tranquilo!</p>
+         </div>
+      </div>
+   </div>
+</div>
+
+<% # CADASTRO PARA RECEBER CUPOM DE DESCONTO %>
+<%=render "layouts/partials/register_for_discount"%>
+
+
+<% # ULTIMAS NOVIDADES EM PRODUTOS%>
+<%=render "layouts/partials/latest_news" %>
+      
+

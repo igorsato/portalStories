@@ -12,5 +12,19 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require theme
+//= require slideanims
+//= require layeranimation
+//= require kenburn
+//= require navigation
+//= require parallax
+//= require jquery-readyselector
+//= require ion.rangeSlider.min
+//= require jquery.mask.min
+//= require numeral.min
+//= require ./languages/pt-br.min
+//= require shops
+//= require products
+//= require carts
+//= require home
+//= require checkout

@@ -1,0 +1,28 @@
+<%= render partial: "/layouts/partials/top_background_randon", locals: {name: 'Esquceu sua senha'} %>
+
+<div class="mdl-grid">
+  <div class="mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp mdl-cell--middle" id="forgot_password">
+    <div class="mdl-card__title">
+      <h1 class="mdl-card__title-text" id="title_card">Esqueceu sua senha?</h1>
+    </div>
+    <div class="mdl-card__supporting-text">
+
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <div id="panel-user-error" class="alert alert-danger "><%= devise_error_messages! %></div>
+
+          <div class="mdl-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield textfield-demo mdl-textfield--floating-label">
+
+              <%= f.label :email, class: 'mdl-textfield__label' %>
+              <%= f.email_field :email, autofocus: true, class: 'mdl-textfield__input' %>
+            </div>
+          </div>
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--middle ">
+          <%= f.submit "Enviar Senha" , class: 'mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-js-ripple-effect mdl-button--accent oxy-margin-bottom-10'%>
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
+</div>

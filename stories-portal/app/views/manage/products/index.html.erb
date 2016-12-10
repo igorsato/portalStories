@@ -1,0 +1,56 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+		<h4>Produtos</h4>
+		<div class="container"> 		
+		  <div class="row">
+				<ul class="nav navbar-nav navbar-left">
+			    <li><a href="<%=url_for(new_manage_product_path)%>" class="btn btn-default">Criar Novo Produto</a></li>
+			  </ul>
+		  </div>
+	  </div>
+  </div>
+
+  <div class="panel-body">
+  	<div class="col-lg-12 table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th style="width:3%;">Ativo</th>
+							<th style="width:3%;">Destaque</th>
+							<th style="width:5%">Imagem</th>
+							<th style="width:10%;">Nome</th>
+							<th style="width:30%;">Descrição Curta</th>
+							<th style="width:4%;">SKU</th>
+							<th style="width:5%;">Preço de Venda</th>
+							<th style="width:5%;">Preço Promocional</th>
+							<th style="width:5%;">Saldo</th>
+							<th style="width:5%;">Ação</th>
+						</tr>
+					</thead>
+					<tbody>
+							<%@products.each do |product|%>
+								<tr>
+									<td><i class="fa fa-lg <%= product.active? ? 'fa-check-circle-o default-color': 'fa-times-circle default-no-ok'%>" aria-hidden="true"></i></td>
+									<td><i class="fa fa-lg <%= product.featured? ? 'fa-star default-color': 'fa-star-o default-no-ok'%>" aria-hidden="true"></i></td>
+									<td><%=image_tag(product.pictures[0].media.url(:thumb)) if product.pictures.present?%></td>
+									<td><%=product.name%></td>
+									<td><%=truncate(product.description_short, length: 100)%></td>
+									<td><%=product.sku%></td>
+									<td><%=product.sale_price%></td>
+									<td><%=product.promotional_price%></td>
+									<td><%=product.balance%></td>
+									<td>
+										<%=link_to edit_manage_product_path(product.id) do%>
+											<i class="fa fa-pencil-square-o fa-lg default-color" aria-hidden="true"></i>
+										<%end%>
+									</td>
+								</tr>
+							<%end%>
+					</tbody>
+		  	</table>
+				<div class="col-lg-12 text-center">
+					<%= paginate @products, views_prefix: 'manage/' %>
+				</div>
+		</div>
+	</div>
+</div>

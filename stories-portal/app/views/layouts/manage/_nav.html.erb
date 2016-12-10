@@ -1,0 +1,77 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<%=url_for(manage_root_path)%>"><%=APPLICATION_MANAGER_NAME%></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <!--form class="navbar-form navbar-right" role="form">
+        <div class="form-group">
+          <input type="text" placeholder="Email" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">ENTRAR</button>
+      </form-->
+      <% if user_signed_in?%>
+			<ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="<%=url_for(manage_orders_path)%>">Pedidos</a>
+        </li>
+        <li class="dropdown">
+          <a href="javscript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clientes <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%=url_for(manage_customers_path)%>">Listagem</a>
+            </li>
+            <li>
+              <a href="<%=url_for(new_manage_customer_path)%>">Novo</a>
+            </li>            
+          </ul>
+
+        </li>       
+
+        <li class="dropdown">
+          <a href="javscript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categoria <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%=url_for(manage_categories_path)%>">Listagem</a>
+            </li>
+            <li>
+              <a href="<%=url_for(new_manage_category_path)%>">Novo</a>
+            </li>            
+          </ul>
+        </li>      
+        <li class="dropdown"><a href="javscript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produto <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="<%=url_for(manage_products_path)%>">Listagem</a>
+            </li>
+            <li>
+              <a href="<%=url_for(new_manage_product_path)%>">Novo</a>
+            </li>            
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Conta de Usuário <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="<%=root_path%>">Loja</a></li>
+            <li><a href="<%=edit_manage_customer_path(current_customer.id)%>">Alterar Dados</a></li>
+            <li role="separator" class="divider"></li>
+            <li><%= link_to destroy_customer_session_path, method: :delete do %>
+            Sair<%end%></li>
+          </ul>
+        </li>
+      </ul> 
+      <%end%>     
+    </div><!--/.navbar-collapse -->
+  </div>
+</nav>

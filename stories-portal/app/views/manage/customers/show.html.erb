@@ -1,0 +1,36 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+		<h4>Pedidos Cliente <%=@customer.name if !@customer.name.blank?%>&nbsp;<%=@customer.lastname if !@customer.lastname.blank?%></h4>
+		<div class="container"> 		
+		  <div class="row">
+          <%=link_to 'Voltar', manage_customers_path, class: 'btn btn-default'%>
+		  </div>
+	  </div>
+    </div>
+    <table class="table table-hover">
+    <thead>
+        <tr class="align-center">
+            <th style="width:11%;">Nº do pedido</th>
+            <th style="width:13%;">Pagamento</th>
+            <th style="width:11%;">Status do pedido</th>
+            <th style="width:11%;">SubTotal do pedido</th>
+            <th style="width:11%;">Valor do frete</th>
+            <th style="width:13%;">Valor total do pedido</th>            
+        </tr>
+	</thead>
+    <tbody>
+        <% @orders.each do |order| %>
+            <tr>
+              <td><%=order.order_number%></td>
+              <td><%= order.payment.name%></td>
+              <td><%= order.order_status.name%></td>
+              <td><%= number_to_currency order.subtotal%></td>
+              <td><%= number_to_currency order.shipping%></td>
+              <td><%= number_to_currency order.total%></td>
+          </tr>
+        <%end%>
+	</tbody>
+    </table>
+
+</div>

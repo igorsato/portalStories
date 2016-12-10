@@ -1,0 +1,43 @@
+<%# CART FLOATING %>
+
+<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored oxy-button-fab oxy-js-button-shopping-cart mdl-badge oxy-button-fab__badge" data-badge="<%=@order.order_items.size%>"><i class=material-icons>shopping_cart</i></button>
+      <div class="mdl-layout__drawer mdl-layout__drawer--right oxy-product-cart">
+         <span class=mdl-layout-title>Carrinho</span>
+         <div class=oxy-layout__divider></div>
+         <div class=oxy-product-cart__body>
+            <ul class=oxy-list>
+              <% if !@order.order_items.blank?%>
+                <%@order.order_items.each do |item|%>
+                <li class=oxy-list__item>
+                    <a href="<%=product_path(id: item.product.slug)%>" class="oxy-list__icon">
+                      <img src="<%=image_url(item.product.pictures.first.media.url(:thumb))%>" alt="<%=item.product.name%>">
+                    </a>
+                    <div class="oxy-list__item-text">
+                      <a href="<%=product_path(id: item.product.slug)%>" class="oxy-list__title"><%=item.product.name%></a> 
+                      <span class="oxy-list__subtitle"><%=item.quantity%> x <%=number_to_currency item.unit_price%></span>
+                    </div>
+                    <div class=oxy-list__item-secondary-action>
+                      <%= link_to order_items_path(id: item.id), data: { confirm: "Você tem certeza que deseja remover o produto '#{item.product.name}' da sua compra?" }, method: :delete, class: 'mdl-button mdl-js-button mdl-button--accent mdl-button--icon' do%>
+                        <i class="material-icons">delete_sweep</i>
+                      <%end%>
+                    </div>
+                </li>
+                <%end%>
+              <%end%>
+            </ul>
+            <div class=oxy-product-cart__actions>
+               <div class=oxy-layout__divider></div>
+               <h3 class=oxy-product-cart__total>Subtotal: <%=number_to_currency @order.subtotal%></h3>
+               <div class=oxy-layout__divider></div>
+               <div class=mdl-grid>
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone"><a href="<%=cart_path%>" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent oxy-full-width">Carrinho</a></div>
+
+                  <% if !@order.order_items.blank?%>
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--2-col-phone"><a href="<%=checkout_path%>" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary oxy-full-width">Concluir</a></div>
+                  <% end %>
+               </div>
+            </div>
+         </div>
+      </div>
+  <div id="side-cart-obfuscator" class="mdl-layout__obfuscator"></div>
+

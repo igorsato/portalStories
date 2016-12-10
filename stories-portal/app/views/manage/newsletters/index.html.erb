@@ -1,0 +1,37 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+		<h4>Newsletters</h4>
+  </div>
+	<% if flash[:success] %>
+    <div class="notice alert alert-success text-center"><%= flash[:success] %></div>
+  <% end %>
+	<% if flash[:error] %>
+    <div class="notice alert alert-danger text-center"><%= flash[:error] %></div>
+  <% end %>	
+  <div class="panel-body">
+  	<div class="col-lg-12 table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+              <th></th>
+							<th  class="align-left ">Nome</th>
+							<th  class="align-left">Email</th>
+						</tr>
+					</thead>
+					<tbody>
+							<%@newsletters.each do |newsletter|%>
+                <% if !newsletter.blank?%>
+                  <tr>
+                    <td><% if newsletter.active? %><%=newsletter.active%></td>
+                    <td class="align-left" style="width:5%;"><%=newsletter.name%></td>
+                    <td class="align-left"style="width:5%;"><%=newsletter.email%></td>
+                  </tr>
+                <%end%>
+              <%end%>
+					</tbody>
+		  	</table>
+						
+		</div>
+	</div>
+</div>

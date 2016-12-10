@@ -1,0 +1,172 @@
+.btn-buy {
+    width: 30%;
+    height: 70px;
+    font-size: 1.2em!important;
+    letter-spacing: .1em!important;
+    text-shadow: 2px 1px rgba(0, 0, 0, .54);
+}
+
+.mdl-login.mdl-card {
+    margin: 0 auto;
+}
+
+.mdl-cell--alert {
+    background-color: #F2DEDE;
+    color: #A94442;
+}
+
+.mdl-cell--success {
+    background-color: #DFF0D8;
+    color: #3C763D;
+}
+
+.mdl-login .mdl-grid {
+    max-width: 600px;
+}
+
+.mdl-login .mdl-card__media {
+    margin: 0;
+}
+
+.mdl-login .mdl-card__media>img {
+    max-width: 100%;
+}
+
+.mdl-login .mdl-card__actions {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.mdl-login .mdl-card__actions>.mdl-button--icon {
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+.mdl-login .centered_buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.mdl-truckage-card-cart {
+    margin-right: 0;
+    border: 1px solid #ccc;
+}
+
+.mdl-navigation__link {
+    font-size: .9em!important;
+    color: rgba(0, 0, 0, 0.54)!important;
+    vertical-align: middle!important;
+    height: 20px!important;
+    line-height: 20px;
+}
+
+.mdl-nav-link {
+    top: -65px;
+    right: 250px;
+}
+
+#card_login {
+    margin-left: auto;
+}
+
+#card_register {
+    margin-right: auto;
+}
+
+#card_text_register {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#forgot_password {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#title_card {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#error_explanation h2 {
+    font-size: 1.4em;
+}
+
+#error_explanation ul {
+    background-color: #F2DEDE;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+#error_explanation ul li {
+    padding: 5px;
+    color: #444;
+}
+
+ul.errors-list-type {
+    list-style: none;
+    padding: 0;
+}
+
+ul.errors-list-type li {
+    padding: 10px;
+}
+
+ul.errors-list-type li:before {
+    content: "\f057";
+    /* FontAwesome Unicode */
+    font-family: FontAwesome;
+    display: inline-block;
+    /* same as padding-left set on li */
+    width: 1.3em;
+    color: red;
+}
+
+#error-explanation {
+    background-color: #F2DEDE;
+    color: #A94442;
+}
+
+ul.errors-list-type {}
+
+.centralize_button {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+select.state_address {
+    background-color: #fff;
+    height: 35px;
+    border: none;
+    margin-top: 15px;
+    color: inherit;
+}
+
+.select_field {
+    background-color: #fff;
+    height: 35px;
+    border: none;
+    margin-top: 15px;
+    margin-left: auto;
+}
+
+#align-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header-icon {
+    position: relative;
+    top: 7px;
+    font-size: 30px;
+}
+
+.header-icon-text {
+    font-size: 20px;
+    font-style: normal;
+}
+
+#top-background-random-name {
+    font-size: 50px;
+}
