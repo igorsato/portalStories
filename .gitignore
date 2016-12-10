@@ -1,4 +1,6 @@
-
-
-*/temp/*
+.gitignore
+*.sqlite*
 *.log
+*tmp*
+*system*
+*.vscode*
